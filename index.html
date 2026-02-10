@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<script>
+    fetch('/api/verify', {
+        method: 'POST',
+        credentials: 'include'
+    }).then(response => {
+        // 检查状态码和内容类型
+        const contentType = response.headers.get('content-type') || '';
+        
+        if (response.ok && contentType.includes('text/html')) {
+            // 返回的是HTML，说明已登录
+            return response.text().then(html => {
+            // 立即替换整个页面
+            document.open();
+            document.write(html);
+            document.close();
+            });
+        }
+    }).catch(() => {
+        // 网络错误
+    });
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>请输入密码</title>
+</head>
+<body>
+    <form action="/api/password" method="POST">
+        <label for="username">用户名：</label>
+        <input type="number" id="username" name="username" placeholder="请输入用户名" required>
+        <br><br>
+        <label for="password">密码：</label>
+        <input type="password" id="password" name="password" placeholder="请输入密码" required>
+        <br><br>
+        <input type="submit">
+    </form>
+</body>
+</html>

@@ -1,0 +1,3066 @@
+:root {
+    --blue_purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --orange_brown: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+    --orange_brown_transparent: linear-gradient(135deg, rgba(217, 119, 6, 0.8) 0%, rgba(146, 64, 14, 0.8) 100%);
+    --electric-border-color: #44ddff;
+    --dark_electric-border-color: #0077cc;
+    --orange_electric-border-color: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+}
+/* ==================== 基础样式 ==================== */
+
+/* 总体样式 */
+body {
+    font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: var(--orange_brown);
+    background-image: url('../images/background.svg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    min-height: 100vh;
+}
+
+/* 标题容器 */
+h1 {
+    text-align: center;
+    color: white;
+    margin: 30px 0;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px 0;
+    padding: 0 20px;
+}
+
+/* 标题图标 */
+.title-icon {
+    background: var(--orange_brown);
+    background-image: url('../images/logo.svg');
+    display: flex;
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: scale(2);
+    cursor: pointer;
+    color: transparent;
+    text-shadow: none;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1000;
+}
+
+
+.title-icon:hover {
+    transform: scale(2.7);
+}
+
+/* 标题文字 */
+.title-main {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2d3748;
+    text-align: center;
+    position: relative;
+    padding: 0 20px;
+    display: inline-block;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+/* 始终存在下划线容器，但默认隐藏 */
+.title-main::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-out, left 0.3s ease-out;
+}
+
+/* 鼠标悬停时展开下划线 */
+.title-main:hover::after {
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* 鼠标移开时下划线收缩（倒放） */
+.title-main:not(:hover)::after {
+    width: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* 悬停时文字颜色变化 */
+.title-main:hover {
+    color: #78350f;
+    text-shadow: 0 2px 8px rgba(217, 119, 6, 0.15);
+}
+
+/* ==================== 新增记录按钮 ==================== */
+
+/* 基础样式 */
+.add-record-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 6px 20px rgba(217, 119, 6, 0.25),
+        0 2px 8px rgba(146, 64, 14, 0.15);
+    letter-spacing: 0.5px;
+    position: absolute;
+    left: 2%;
+    overflow: hidden;
+    z-index: 1;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 14px;
+    min-width: 140px;
+    gap: 6px;
+}
+
+/* 按钮图标 */
+.add-record-btn::before {
+    content: "+";
+    font-size: 16px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+/* 按钮悬停效果 */
+.add-record-btn:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+    transform: translateY(-2px);
+    box-shadow: 
+        0 10px 25px rgba(217, 119, 6, 0.35),
+        0 4px 12px rgba(146, 64, 14, 0.2);
+}
+
+.add-record-btn:hover::before {
+    transform: scale(1.2) rotate(90deg);
+}
+
+/* 按钮点击效果 */
+.add-record-btn:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 4px 12px rgba(217, 119, 6, 0.25),
+        0 1px 4px rgba(146, 64, 14, 0.15);
+}
+
+/* 按钮光效背景 */
+.add-record-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    z-index: -1;
+}
+
+.add-record-btn:hover::after {
+    transform: translateX(100%);
+}
+
+/* 按钮文字 - 如果需要有文字的话 */
+.add-record-btn span {
+    font-weight: 600;
+}
+
+/* ==================== 表格样式 ==================== */
+
+/* 表格样式 */
+#logs {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    background: transparent;
+}
+
+/* 表头容器样式 */
+#logs thead {
+    position: sticky;
+    top: 0;
+}
+
+/* 表头行样式 */
+#logs thead tr {
+    background: var(--orange_brown_transparent);
+}
+
+/* 表头样式 */
+#logs th {
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    padding: 18px 15px;
+    border: none;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+/* 表头伪元素样式（分隔线） */
+#logs th:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+
+/* 表体样式 */
+#logs tbody {
+    position: relative;
+}
+
+/* 表体行样式 */
+#logs tbody tr {
+    transition: all 0.3s ease;
+    backdrop-filter: blur(2px);
+    background-color: rgba(255, 255, 255, 0.92);
+    will-change: transform, box-shadow;
+    position: relative
+}
+
+/* 表体行鼠标选中样式 */
+#logs tbody tr:hover {
+    transform: translateY(-2px);
+    background-color: rgba(245, 250, 255, 1);
+    box-shadow: 0 5px 18px rgba(74, 144, 226, 0.08);
+}
+
+/* 交替行颜色 */
+#logs tbody tr:nth-child(even) {
+    background-color: rgba(240, 248, 255, 0.92);
+}
+
+#logs tbody tr:nth-child(even):hover {
+    background-color: rgba(235, 245, 255, 1);
+}
+
+/* 伪元素填充线 */
+#logs tbody tr::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.92);
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+/* 伪元素填充线悬停效果 */
+#logs tbody tr:hover::after {
+    background-color: rgba(245, 250, 255, 1);
+    bottom: -4px;
+    height: 4px;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.05);
+}
+
+/* 偶数行伪元素填充线 */
+#logs tbody tr:nth-child(even)::after {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+/* 偶数行伪元素填充线悬停效果 */
+#logs tbody tr:nth-child(even):hover::after {
+    background-color: rgba(235, 245, 255, 1);
+}
+
+/* ==================== 表格行删除按钮 ==================== */
+
+/* 基础样式 */
+.remove-log-btn {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    color: #78350f;
+    border: none;
+    border-radius: 0 0 12px 0;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-shadow: 
+        -2px 2px 4px rgba(146, 64, 14, 0.2),
+        inset 1px -1px 2px rgba(255, 255, 255, 0.4);
+    transform: rotate(45deg) scale(0.85);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2;
+    overflow: hidden;
+    opacity: 0;
+}
+
+/* 鼠标悬停时显示按钮 */
+#logs tbody tr:hover .remove-log-btn {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+}
+
+/* 按钮悬停效果 */
+.remove-log-btn:hover {
+    background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
+    color: #92400e;
+    box-shadow: 
+        -3px 3px 6px rgba(146, 64, 14, 0.3),
+        inset 2px -2px 3px rgba(255, 255, 255, 0.5);
+    transform: rotate(45deg) scale(1.05) !important;
+}
+
+/* 按钮图标 - 使用叉号 */
+.remove-log-btn::before {
+    content: "×";
+    transform: rotate(-45deg);
+    font-size: 20px;
+}
+
+/* 按钮激活/点击效果 */
+.remove-log-btn:active {
+    background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+    transform: rotate(45deg) scale(0.95) !important;
+    box-shadow: 
+        -1px 1px 2px rgba(146, 64, 14, 0.2),
+        inset 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 翘角阴影效果 */
+.remove-log-btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 70%, rgba(0,0,0,0.05) 70%);
+    border-radius: 0 0 12px 0;
+    pointer-events: none;
+}
+
+/* 撕下动画类 - 用于删除时 */
+.tr-removing {
+    animation: tearOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transform-origin: top left;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes tearOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) rotate(0deg);
+        filter: brightness(1);
+    }
+    30% {
+        opacity: 0.9;
+        transform: translateX(-10px) translateY(5px) rotate(-2deg);
+        filter: brightness(1.1) sepia(0.3);
+    }
+    60% {
+        opacity: 0.7;
+        transform: translateX(-30px) translateY(15px) rotate(-8deg);
+        filter: brightness(1.2) sepia(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100px) translateY(-50px) rotate(-15deg) scale(0.8);
+        filter: brightness(1.3) sepia(0.8);
+        height: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+}
+
+/* 删除log时的按钮动画 */
+.tr-removing .remove-log-btn {
+    animation: buttonShrink 0.3s ease forwards;
+}
+
+@keyframes buttonShrink {
+    0% {
+        transform: rotate(45deg) scale(1);
+    }
+    100% {
+        transform: rotate(45deg) scale(0);
+        opacity: 0;
+    }
+}
+
+tfoot {
+    display: none;
+}
+
+#log tfoot tr {
+    display: none;
+}
+/* ==================== 表体详细样式 ==================== */
+
+/* 表体基础样式 */
+#logs td {
+    padding: 16px 15px;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    color: #333;
+    font-size: 14px;
+}
+
+/* 模式单元格样式 */
+#logs td.mode-cell {
+    /* 保持表格单元格特性 */
+    vertical-align: middle;
+    /* padding: 16px 15px; */
+}
+
+/* 模式基础样式 */
+#logs td div.mode {
+    display: flex;
+    place-items: center;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    width: min-content;
+    justify-self: center;
+    align-items: center;
+    /* vertical-align: top; */
+    /* margin-top: 56.5px */
+}
+
+/* 模式按严重程度设置颜色 */
+#logs td div.mode-拉黑 { background: #d32f2f; color: white; } /* 最严重 - 红色 */
+#logs td div.mode-踢出 { background: #f44336; color: white; }
+#logs td div.mode-禁言 { background: #ff9800; color: white; } /* 橙色 */
+#logs td div.mode-警告 { background: #ffc107; color: #333; } /* 黄色 */
+#logs td div.mode-撤回 { background: #4caf50; color: white; } /* 绿色 */
+#logs td div.mode-记过 { background: #2196f3; color: white; } /* 蓝色 */
+#logs td div.mode-记录 { background: #9c27b0; color: white; } /* 紫色 */
+#logs td div.mode-无 { background: #607d8b; color: white; }
+
+/* ID样式 */
+#logs td.id {
+    font-weight: bold;
+    color: #667eea;
+    font-family: 'Courier New', monospace;
+}
+
+/* 目标基础样式 */
+#logs td.target {
+    max-width: 180px;
+    min-width: 160px;
+    padding: 12px 15px;
+}
+
+/* 目标容器样式 */
+#logs td.target .target-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* padding: 12px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
+    position: relative;
+    /* overflow: hidden; */
+}
+
+/* 状态对应的边框颜色 */
+/* #logs td.target .target-info[data-state="banned"] {
+    border-left: 4px solid #F44336;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffeaea 100%);
+}
+
+#logs td.target .target-info[data-state="kicked"] {
+    border-left: 4px solid #FF9800;
+    background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
+}
+
+#logs td.target .target-info[data-state="alive"] {
+    border-left: 4px solid #4CAF50;
+} */
+
+/* 悬停效果 */
+/* #logs tr:hover td.target .target-info {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-color: #dee2e6;
+} */
+
+/* 目标风险徽章样式 */
+#logs td.target .target-risk-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    width: fit-content;  /* 添加这行，让宽度适应内容 */
+    margin: 0 auto;  /* 添加这行，水平居中 */
+}
+
+/* 风险等级颜色：高、中、低 */
+#logs td.target .risk-high {
+    background: linear-gradient(135deg, #FF5252 0%, #D32F2F 100%);
+    animation: pulseDanger 2s infinite;
+}
+
+#logs td.target .risk-medium {
+    background: linear-gradient(135deg, #FFB74D 0%, #F57C00 100%);
+}
+
+#logs td.target .risk-low {
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+}
+
+/* 高风险闪烁动画 */
+@keyframes pulseDanger {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.9; box-shadow: 0 0 0 4px rgba(255, 82, 82, 0.3); }
+}
+
+/* 风险徽章内图标 */
+#logs td.target .risk-icon {
+    font-size: 14px;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+}
+
+/* 风险徽章内文字 */
+#logs td.target .risk-text {
+    font-weight: 700;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* 风险徽章内风险值 */
+#logs td.target .risk-score {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-family: 'Consolas', monospace;
+    font-weight: 800;
+    backdrop-filter: blur(4px);
+}
+
+/* 目标主要信息区域 */
+#logs td.target .target-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+}
+
+/* 目标QQ号样式 */
+#logs td.target .target-number {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2c3e50;
+    padding: 4px 10px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+/* 目标QQ号悬停效果 */
+#logs tr td.target .target-number:hover {
+    background: #f8f9fa;
+    border-color: #3498db;
+    color: #2980b9;
+}
+
+/* 目标昵称样式 */
+#logs td.target .target-name {
+    font-size: 12px;
+    color: #7f8c8d;
+    font-weight: 500;
+    padding: 3px 8px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    max-width: 90%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+}
+
+/* 目标昵称悬停效果 */
+#logs tr td.target .target-name:hover {
+    color: #3498db;
+    background: white;
+    border-color: #e3f2fd;
+}
+
+/* 状态指示器样式 */
+#logs td.target .target-state {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+    background: var(--state-color, #4CAF50);
+    margin-top: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* 状态指示器悬停效果 */
+#logs tr:hover td.target .target-state {
+    transform: scale(1.05);
+}
+
+/* 统计数据（默认隐藏，悬停显示） */
+/* #logs td.target .target-stats {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border: 1px solid #dee2e6;
+    z-index: 100;
+    margin-top: 8px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+} */
+
+/* #logs td.target .target-info:hover .target-stats {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+} */
+
+/* #logs td.target .stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+} */
+
+/* #logs td.target .stat-item:last-child {
+    border-bottom: none;
+} */
+
+/* #logs td.target .stat-label {
+    font-size: 11px;
+    color: #666;
+    font-weight: 500;
+} */
+
+/* #logs td.target .stat-value {
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Consolas', monospace;
+} */
+
+/* #logs td.target .risk-value-high {
+    color: #D32F2F;
+    font-weight: 700;
+}
+
+#logs td.target .risk-value-medium {
+    color: #F57C00;
+}
+
+#logs td.target .risk-value-low {
+    color: #2E7D32;
+}
+
+#logs td.target .state-value-banned {
+    color: #D32F2F;
+}
+
+#logs td.target .state-value-kicked {
+    color: #F57C00;
+}
+
+#logs td.target .state-value-alive {
+    color: #2E7D32;
+} */
+
+/* 管理员单元格基础样式 */
+#logs td.operator {
+    max-width: 150px;
+    /* min-width: 150px; */
+    padding: 10px 15px;
+    text-align: center;
+}
+
+/* 管理员信息容器 */
+#logs td.operator .operator-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    /* padding: 10px; */
+    /* border-radius: 12px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6; */
+    /* transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); */
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); */
+}
+
+/* 悬停效果 */
+/* #logs tr:hover td.operator .operator-info {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-color: #adb5bd;
+} */
+
+/* 管理员徽章样式 */
+#logs td.operator .operator-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 徽章微光效果 */
+#logs td.operator .operator-badge::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 70%
+    );
+    transform: rotate(45deg);
+    animation: badgeShine 3s infinite linear;
+}
+
+/* 徽章泛光动画 */
+@keyframes badgeShine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* 不同身份徽章颜色 */
+#logs td.operator .badge-owner {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #8B4513;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+#logs td.operator .badge-admin {
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+#logs td.operator .badge-former {
+    background: linear-gradient(135deg, #9E9E9E 0%, #616161 100%);
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    opacity: 0.8;
+}
+
+#logs td.operator .badge-unknown {
+    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* 管理员QQ号显示样式 */
+#logs td.operator .operator-number {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2c3e50;
+    padding: 2px 8px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+/* 管理员QQ号悬停效果 */
+#logs td.operator .operator-number:hover {
+    background: #f8f9fa;
+    border-color: #3498db;
+    color: #2980b9;
+}
+
+/* 管理员昵称样式 */
+#logs td.operator .operator-name {
+    font-size: 12px;
+    color: #7f8c8d;
+    font-weight: 500;
+    padding: 2px 10px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+/* 管理员昵称悬停效果 */
+#logs tr td.operator .operator-name:hover {
+    color: #3498db;
+    background: white;
+    border-color: #e3f2fd;
+}
+
+/* 为不同身份添加特殊效果
+#logs td.operator [data-operator-type="owner"] {
+    background: linear-gradient(135deg, #FFF9C4 0%, #FFECB3 100%);
+    border-color: #FFD54F;
+}
+
+#logs td.operator [data-operator-type="owner"] .operator-number {
+    color: #E65100;
+    border-color: #FFB74D;
+}
+
+#logs td.operator [data-operator-type="former"] {
+    opacity: 0.9;
+    filter: grayscale(0.2);
+}
+
+#logs td.operator [data-operator-type="former"] .operator-badge {
+    animation: pulseFade 2s infinite;
+} */
+
+/* @keyframes pulseFade {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+} */
+
+/* 群聊单元格样式 */
+#logs td.group-cell {
+    /* 保持表格单元格特性 */
+    vertical-align: middle;
+}
+
+/* 群聊单元格基础样式 */
+#logs td div.group_id {
+    position: relative;
+    padding-left: 52px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    isolation: isolate;
+    box-sizing: border-box;
+}
+
+/* 所有群聊单元格都有的头像框 */
+#logs td div.group_id:not(.no-group)::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f0f0f0;
+    border: 3px solid #fff;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.15),
+        inset 0 1px 3px rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    z-index: 100;
+    box-shadow: none;
+}
+
+/* 使用默认头像样式 */
+#logs td div.group_id.no-avatar::before {
+    background-image: 
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23667eea"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>'),
+        linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-size: 18px, cover;
+    background-position: center, center;
+}
+
+/* 有自定义头像的样式 - 通过JS动态设置背景图 */
+#logs td div.group_id.has-avatar::before {
+    /* 背景图由JavaScript通过行内样式设置 */
+    background-image: var(--avatar-image, none);
+}
+
+/* 群聊头像悬停效果 */
+#logs tr td div.group_id:hover::before {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 
+        0 4px 12px rgba(102, 126, 234, 0.25),
+        inset 0 1px 3px rgba(255, 255, 255, 0.4);
+}
+
+/* 群聊头像加载完成后的动画 */
+#logs td div.group_id.avatar-loaded::before {
+    animation: avatarFadeIn 0.5s ease;
+}
+
+@keyframes avatarFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+}
+
+/* 没有群聊的单元格样式 */
+#logs td.no-group {
+    padding-left: 15px; /* 没有头像，恢复普通padding */
+    color: #999;
+    font-style: italic;
+    justify-content: center;
+}
+
+/* 确保文本不会被头像覆盖 */
+#logs td div.group_id:not(.no-group) > * {
+    display: inline-block;
+    max-width: calc(100% - 40px);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%; 
+}
+
+/* 群聊文本样式 */
+#logs td div.group_id span.group-info {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1.4;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%; 
+}
+
+/* 群聊QQ号样式 */
+#logs td div.group_id .group-number {
+    font-weight: bold;
+    color: #333;
+}
+
+/* 群聊昵称样式 */
+#logs td div.group_id .group-name {
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+}
+
+/* 为不同的群聊类型添加颜色标识 */
+/* #logs td div.group_id[data-group-type="official"]::before {
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+}
+
+#logs td div.group_id[data-group-type="test"]::before {
+    background: linear-gradient(135deg, #FF9800 0%, #EF6C00 100%);
+}
+
+#logs td div.group_id[data-group-type="private"]::before {
+    background: linear-gradient(135deg, #9C27B0 0%, #6A1B9A 100%);
+} */
+
+/* 时长样式 */
+#logs td.duration {
+    font-family: 'SF Mono', 'Courier New', monospace;
+    font-weight: 700;
+    color: #333;
+    min-width: 40px;
+    padding: 6px 10px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* 时间样式 */
+#logs td.time {
+    color: #5f6368;
+    font-size: 13px;
+    font-family: 'Segoe UI', -apple-system, system-ui, sans-serif;
+    font-weight: 500;
+    min-width: 40px;
+    padding: 8px 12px;
+}
+
+/* 图片链接样式 */
+#logs td.image {
+    min-width: 150px;
+}
+
+/* 图片链接背景样式 */
+#logs td.image a {
+    display: inline-block;
+    margin: 2px;
+    padding: 6px 12px;
+    background: var(--orange_brown);
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+/* 图片链接悬停样式 */
+#logs td.image a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(217, 119, 6, 0.4);
+    background: linear-gradient(135deg, #92400e 0%, #d97706 100%);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 图片链接点击时移除上移效果 */
+#logs td.image a:active {
+    transform: translateY(0);
+}
+
+/* 当没有图片时 */
+#logs td.image:empty::before,
+#logs td.no-image {
+    color: #999;
+    font-style: italic;
+}
+
+/* 原因单元格样式 */
+#logs td.reason {
+    max-width: 250px;
+    text-align: center;
+    line-height: 1.5;
+    word-break: break-word;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 10px 15px;
+    min-width: 150px;
+}
+
+/* ==================== 分页栏样式 ==================== */
+
+/* 分页栏基础样式 */
+#page {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+/* 页码按钮样式 */
+#page button {
+    margin: 0 8px;
+    font-weight: 600;
+    backdrop-filter: blur(5px);
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    border: 1px solid #dee2e6;
+    background-color: white;
+    color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 页码按钮悬停样式 */
+#page button:hover:not(:disabled) {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    background-color: #e9ecef;
+    border-color: #007bff;
+}
+
+/* 页码按钮按下时移除上移效果 */
+#page button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+/* 页码按钮禁用样式（主要用于下一页和上一页） */
+#page button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #ccc;
+}
+
+/* 当前页码按钮样式（当页页码不能点） */
+#page button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+/* 当前页面透明度修正 */
+#page button:disabled.active {
+    opacity: 1;
+}
+
+/* 页码省略号样式 */
+#page .page-dots {
+    color: #6c757d;
+    padding: 0 4px;
+    font-size: 14px;
+    user-select: none;
+}
+
+/* 上一页下一页按钮样式 */
+#prevBtn, #nextBtn {
+    min-width: 80px;
+    font-weight: bold;
+}
+
+/* ==================== 上限选择器样式 ==================== */
+/* 上限选择器容器样式 */
+#limitSelector {
+    display: inline-block;
+    user-select: none;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    margin-right: 0;
+}
+
+/* 当前上限容器样式（每页：） */
+#limitCurrent {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a5568;
+    min-width: 100px;
+    justify-content: center;
+}
+
+/* 当前上限容器悬停效果（每页：） */
+#limitCurrent:hover {
+    border-color: #667eea;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+/* 当前上限样式（具体上限） */
+#limitCurrent .limit-arrow {
+    font-size: 10px;
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+}
+
+/* 上限选项容器样式 */
+#limitOptions {
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none;
+    min-width: 100px;
+    overflow: hidden;
+}
+
+/* 点击时显示上限选择框 */
+#limitSelector.active #limitOptions {
+    display: block;
+}
+
+/* 具体选项样式 */
+.limit-option {
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    color: #4a5568;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* 最后一个选项没下边框 */
+.limit-option:last-child {
+    border-bottom: none;
+}
+
+/* 具体选项悬停样式 */
+.limit-option:hover {
+    background: #f7fafc;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* 具体选项当前上限样式 */
+.limit-option.selected {
+    background: var(--orange_brown);
+    color: white;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+/* 通知动画 */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* ==================== 快速定位按钮 ==================== */
+
+/* 返回顶部按钮样式 */
+#backToTopBtn {
+    position: fixed;
+    bottom: 74px;
+    right: 40px;
+    margin: 0;
+    font-weight: 600;
+    backdrop-filter: blur(5px);
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid #dee2e6;
+    background-color: white;
+    color: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+
+#backToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#backToTopBtn:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+#backToTopBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+}
+
+#backToTopBtn svg {
+    transition: transform 0.3s ease;
+}
+
+#backToTopBtn:hover svg {
+    transform: translateY(-2px);
+}
+
+/* ==================== 修改面板样式 ==================== */
+
+/* 表单容器，覆盖屏幕的遮罩层 */
+#form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0);
+    z-index: 999;
+    display: none;  /* 默认隐藏 */
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 显示时的遮罩层 */
+#form-overlay.active {
+    display: flex;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+/* 表单整体样式 */
+form#edit {
+    display: none;
+    width: 80%;
+    max-width: 800px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border: none;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 20px;
+    padding: 40px 30px 30px 30px;
+    z-index: 1000;
+    box-shadow: 
+        0 20px 60px rgba(146, 64, 14, 0.25),
+        0 10px 30px rgba(217, 119, 6, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    position: relative;
+    
+    /* 动画效果 */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 表单标题样式 */
+form#edit::before {
+    content: "编辑记录";
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #78350f;
+    margin-bottom: 20px;
+    width: 100%;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(217, 119, 6, 0.2);
+    letter-spacing: 1px;
+}
+
+/* 表单开启效果 */
+#form-overlay.active form#edit {
+    opacity: 1;
+    transform: translateY(0);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+/* 表单内容 */
+form#edit > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 15px 20px;
+    background: rgba(255, 248, 240, 0.7);
+    border-radius: 12px;
+    border: 1px solid rgba(217, 119, 6, 0.15);
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.08);
+    transition: all 0.3s ease;
+}
+
+/* 表单内容悬停效果 */
+form#edit > div:hover {
+    background: rgba(255, 248, 240, 0.9);
+    box-shadow: 0 6px 18px rgba(217, 119, 6, 0.12);
+    transform: translateY(-2px);
+}
+
+/* 输入栏的标签样式 */
+form#edit label {
+    font-weight: 600;
+    color: #92400e;
+    margin-bottom: 8px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+/* 输入栏样式 */
+form#edit input[type="text"],
+form#edit input[type="number"],
+form#edit input[type="datetime-local"] {
+    width: 80%;
+    max-width: 400px;
+    padding: 12px 16px;
+    margin: 5px 0;
+    text-align: center;
+    border: 2px solid rgba(217, 119, 6, 0.2);
+    border-radius: 10px;
+    background: white;
+    color: #333;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.05);
+}
+
+/* 输入栏聚焦效果 */
+form#edit input:focus {
+    outline: none;
+    border-color: #d97706;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+    background: #fffaf0;
+}
+
+/* 只读输入栏 */
+form#edit input[readonly] {
+    background: #f8f9fa;
+    color: #666;
+    cursor: not-allowed;
+    border-color: rgba(217, 119, 6, 0.1);
+}
+
+/* 原因输入栏特殊样式 */
+form#edit div#reason input {
+    width: 90%;
+    max-width: 500px;
+    font-size: 16px;
+    padding: 14px 20px;
+}
+
+/* 图片上传区域容器 */
+form#edit div#image {
+    padding: 20px;
+    background: rgba(255, 251, 247, 0.8);
+}
+
+/* 图片上传按钮 */
+form#edit div#image input[name="image"] {
+    width: 120px;
+    height: auto;
+    margin: 10px auto;
+    display: block;
+    color: transparent;
+}
+
+/* 图片上传按钮伪元素（按钮本体） */
+form#edit div#image input[name="image"]::file-selector-button {
+    background: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* box-shadow: 0 4px 15px rgba(217, 119, 6, 0.25); */
+    letter-spacing: 0.5px;
+}
+/* 图片上传按钮伪元素（按钮本体）悬停效果 */
+form#edit div#image input[name="image"]::file-selector-button:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+    /* box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35); */
+    /* transform: translateY(-1px); */
+}
+
+/* 图片预览区域 */
+#imagePreview {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    border: 1px solid rgba(217, 119, 6, 0.15);
+}
+
+/* 图片预览区域为空效果 */
+#imagePreview.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    text-align: center;
+    color: #92400e;
+    font-size: 15px;
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+/* 预览图片容器 */
+.preview-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid rgba(217, 119, 6, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 预览图片样式 */
+.preview-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    padding: 8px;
+    display: block;
+}
+
+/* 图片删除按钮 */
+.remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+}
+
+/* 图片删除按钮悬停效果 */
+.remove-btn:hover {
+    background-color: #ff3838;
+    transform: scale(1.1);
+}
+
+/* 预览图片悬停和移动效果 */
+form#edit div#image div#imagePreview div.sortable-chosen {
+    cursor: move !important;
+}
+
+form#edit div#image div#imagePreview div.sortable-drag {
+    cursor: move !important;
+}
+
+form#edit div#image div#imagePreview div.sortable-ghost {
+    cursor: move !important;
+}
+
+/* 提交按钮 */
+form#edit input[type="submit"] {
+    grid-column: 1;
+    background: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 40px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(217, 119, 6, 0.25);
+    margin: 20px auto 0 auto;
+    width: 200px;
+    letter-spacing: 1px;
+}
+
+/* 提交按钮悬停效果 */
+form#edit input[type="submit"]:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+    box-shadow: 0 8px 25px rgba(217, 119, 6, 0.35);
+    transform: translateY(-2px);
+}
+
+/* 提交按钮点击效果 */
+form#edit input[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(217, 119, 6, 0.25);
+}
+
+/* 提交按钮禁用效果 */
+form#edit input[type="submit"]:disabled {
+    background: linear-gradient(135deg, #d1d5db 0%, #9ca3af 100%);
+    color: #6b7280;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.1);
+    transform: none !important;
+}
+
+/* 表单关闭按钮 */
+#close-form {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #92400e 0%, #78350f 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 4px 12px rgba(146, 64, 14, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+/* 表单关闭按钮悬停效果 */
+#close-form:hover {
+    background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 6px 18px rgba(146, 64, 14, 0.4);
+}
+
+/* 表单关闭按钮禁用效果 */
+#close-form:disabled {
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+    color: #d1d5db;
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: 0 2px 6px rgba(107, 114, 128, 0.2);
+    transform: none !important;
+    pointer-events: none;
+}
+
+/* 表单关闭禁用悬停效果 */
+#close-form:disabled:hover {
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+    transform: none !important;
+    box-shadow: 0 2px 6px rgba(107, 114, 128, 0.2);
+    animation: none;
+    filter: none;
+}
+
+/* 数据列表样式 */
+datalist {
+    border: 1px solid rgba(217, 119, 6, 0.2);
+    border-radius: 8px;
+    background: white;
+    padding: 5px;
+}
+
+/* 表单分组标签 */
+form#edit > div > label:first-child {
+    font-size: 16px;
+    color: #78350f;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+/* 表单分组标签伪元素（下划线） */
+form#edit > div > label:first-child::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+    border-radius: 1px;
+}
+
+/* 编辑表单成功后给该log添加电流边框 */
+#logs tbody tr.card {
+  border-radius: 1.5em;
+}
+
+.card__layer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* .card__layer--main {
+  border: 2px solid oklch(from var(--electric-border-color) l c h / 0.5);
+} */
+
+.card__layer--main::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  /* border: 2px solid var(--dark_electric-border-color); */
+  border: 2px solid transparent;
+  border-image: var(--orange_electric-border-color) 1;
+  border-radius: inherit;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  margin-top: -4px;
+  margin-left: -4px;
+  filter: url(#turbulent-displace);
+}
+
+/* .card:hover .card__layer--main::after {
+  opacity: 1;
+  margin-top: -4px;
+  margin-left: -4px;
+  filter: url(#turbulent-displace);
+} */
+
+/* .card__layer--glow-tight {
+  border: 2px solid oklch(from var(--electric-border-color) l c h / 0.6);
+  filter: blur(1px);
+}
+
+.card__layer--glow-wide {
+  border: 2px solid var(--electric-border-color);
+  filter: blur(4px);
+} */
+
+/* ==================== 响应式设计 ==================== */
+
+@media (max-width: 1200px) {
+    #logs-container {
+        margin: 10px;
+        padding: 10px;
+    }
+    
+    #logs th, #logs td {
+        padding: 12px 10px;
+        font-size: 13px;
+    }
+    
+    #logs td div.group_id {
+        min-width: 150px;
+        padding-left: 45px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+        /* background-image: url('../images/background_small.jpg'); */
+    }
+
+    h1 {
+        font-size: 28px;
+        margin: 20px 0;
+        height: 62px
+    }
+
+    .title-icon {
+        width: 55px;
+        height: 55px;
+    }
+
+    .title-main::after {
+        height: 2px;
+        bottom: -4px;
+    }
+
+    .add-record-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+        min-width: 100px;
+        gap: 4px;
+    }
+    
+    .add-record-btn::before {
+        font-size: 18px;
+        font-size: 14px;
+    }
+
+    #logs-container {
+        overflow-x: auto;
+    }
+    
+    .remove-log-btn {
+        width: 28px;
+        height: 28px;
+        top: -4px;
+        left: -4px;
+        font-size: 14px;
+        border-radius: 0 0 8px 0;
+        transform: rotate(45deg) scale(0.7);
+    }
+
+    #logs tbody tr:hover .remove-log-btn {
+        transform: rotate(45deg) scale(0.85);
+    }
+
+    .remove-log-btn:hover {
+        transform: rotate(45deg) scale(0.9) !important;
+        box-shadow: 
+            -2px 2px 4px rgba(146, 64, 14, 0.2),
+            inset 2px -2px 3px rgba(255, 255, 255, 0.5);
+    }
+
+    .remove-log-btn::before {
+        font-size: 16px;
+    }
+
+    .remove-log-btn {
+        box-shadow: 
+            -1px 1px 3px rgba(146, 64, 14, 0.15),
+            inset 1px -1px 2px rgba(255, 255, 255, 0.4);
+    }
+
+    @keyframes tearOut {
+        0% {
+            opacity: 1;
+            transform: translateX(0) translateY(0) rotate(0deg);
+            filter: brightness(1);
+        }
+        30% {
+            opacity: 0.9;
+            transform: translateX(-8px) translateY(4px) rotate(-2deg);
+            filter: brightness(1.1) sepia(0.3);
+        }
+        60% {
+            opacity: 0.7;
+            transform: translateX(-20px) translateY(10px) rotate(-6deg);
+            filter: brightness(1.2) sepia(0.5);
+        }
+        100% {
+            opacity: 0;
+            transform: translateX(50px) translateY(-30px) rotate(-12deg) scale(0.7);
+            filter: brightness(1.3) sepia(0.8);
+            height: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+    }
+
+    .remove-log-btn {
+        min-width: 28px;
+        min-height: 28px;
+    }
+
+    #logs tbody tr .remove-log-btn {
+        opacity: 0.8;
+    }
+
+    #logs tbody tr:hover .remove-log-btn {
+        opacity: 1;
+    }
+
+    .remove-log-btn::after {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        right: -8px;
+        bottom: -8px;
+        z-index: -1;
+    }
+
+    #logs td div.mode {
+        font-size: 10px;
+        padding: 4px 7.5px;
+    }
+    
+    #logs td.target {
+        padding: 0;
+        min-width: 0;
+    }
+    
+    #logs td.target .target-info {
+        padding: 10px;
+        gap: 6px;
+    }
+    
+    #logs td.target .target-risk-badge {
+        display: none;
+    }
+    
+    #logs td.target .target-number {
+        font-size: 12px;
+        padding: 3px 8px;
+        /* width: 80px; */
+    }
+
+    #logs td.image {
+        min-width: 40px;
+    }
+
+    #logs td.reason {
+        font-size: 14px;
+        min-width: 100px;
+    }
+
+    #logs td.operator {
+        padding: 8px 10px;
+    }
+    
+    #logs td.operator .operator-info {
+        padding: 8px;
+        gap: 4px;
+    }
+    
+    #logs td.operator .operator-badge {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+    
+    #logs td.operator .operator-number {
+        font-size: 12px;
+    }
+
+    #logs td div.group_id {
+        min-width: 50px;
+        padding-left: 0;
+    }
+
+    #logs td div.group_id span.group-info,
+    #logs td div.group_id .group-number,
+    #logs td div.group_id .group-name {
+        font-size: 10px;
+    }
+
+    #logs td div.group_id::before {
+        display: none;
+    }
+    
+    #logs td div.group_id:not(.no-group) > * {
+        max-width: calc(100% - 32px);
+    }
+    
+    #page {
+        padding: 15px;
+        gap: 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    #limitSelector {
+        margin-bottom: 10px;
+        width: 100%;
+        order: 1;
+        position: relative;
+        top: auto;
+        transform: translateY(25%);
+        left: auto;
+    }
+    
+    #limitCurrent {
+        justify-content: center;
+        width: 100%;
+        padding: 10px 0;
+    }
+    
+    #limitOptions {
+        width: 100%;
+        left: auto;
+        transform: none;
+    }
+
+    /* #page button {
+        margin: 0 5px;
+        padding: 10px 15px;
+        font-size: 13px;
+        min-width: 80px;
+    }
+    
+    #prevBtn, #nextBtn {
+        min-width: 60px;
+        font-size: 12px;
+    } */
+     
+    #backToTopBtn {
+        bottom: 108px;
+    }
+
+    form#edit {
+        width: 95%;
+        padding: 30px 20px 20px 20px;
+    }
+    
+    form#edit > div {
+        padding: 12px 15px;
+    }
+    
+    form#edit input[type="text"],
+    form#edit input[type="number"],
+    form#edit input[type="datetime-local"] {
+        width: 95%;
+    }
+    
+    #imagePreview {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .preview-item {
+        height: 180px;
+    }
+}
+
+/* 暗色模式支持 */
+/* @media (prefers-color-scheme: dark) {} */
+
+/* 删除记录按钮脉冲动画效果 */
+@keyframes buttonPulseDark {
+    0%, 100% {
+        box-shadow: 
+            -2px 2px 8px rgba(0, 0, 0, 0.4),
+            inset 1px -1px 2px rgba(255, 255, 255, 0.2),
+            0 0 0 1px rgba(255, 107, 107, 0.3);
+    }
+    50% {
+        box-shadow: 
+            -2px 2px 12px rgba(255, 107, 107, 0.5),
+            inset 1px -1px 2px rgba(255, 255, 255, 0.3),
+            0 0 0 3px rgba(255, 107, 107, 0.5);
+    }
+}
+
+/* 新增记录按钮脉冲动画效果 */
+@keyframes buttonPulse {
+    0%, 100% {
+        box-shadow: 
+            0 6px 20px rgba(0, 0, 0, 0.4),
+            0 2px 8px rgba(102, 126, 234, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    50% {
+        box-shadow: 
+            0 6px 25px rgba(102, 126, 234, 0.5),
+            0 2px 12px rgba(102, 126, 234, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 0 1px rgba(102, 126, 234, 0.3);
+    }
+}
+
+    @keyframes buttonGlow {
+        0% {
+            opacity: 0.3;
+        }
+        100% {
+            opacity: 0.6;
+        }
+    }
+
+    /* 按钮脉冲动画 */
+    @keyframes backToTopPulse {
+        0%, 100% {
+            box-shadow: 
+                0 2px 10px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+        50% {
+            box-shadow: 
+                0 2px 15px rgba(102, 126, 234, 0.5),
+                0 0 0 2px rgba(102, 126, 234, 0.3);
+        }
+    }
+
+html.dark {
+    body {
+        background: var(--blue_purple);
+        background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    }
+    
+    .title-icon {
+        background: var(--blue_purple);
+        font-size: 36px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        flex-shrink: 0;
+        transform: none;
+    }
+
+    .title-icon:hover {
+        transform: none;
+    }
+
+    .title-main {
+        color: #ffffff; /* 改为白色文字 */
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 始终存在下划线容器，但默认隐藏 */
+    .title-main::after {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* 紫色渐变 */
+        box-shadow: 0 0 10px rgba(102, 126, 234, 0.5); /* 添加发光效果 */
+    }
+
+    /* 鼠标悬停时展开下划线 */
+    .title-main:hover::after {
+        width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 
+            0 0 15px rgba(102, 126, 234, 0.7),
+            0 0 30px rgba(102, 126, 234, 0.3); /* 悬停时增强发光 */
+    }
+
+    /* 悬停时文字颜色变化 */
+    .title-main:hover {
+        color: #a0a0ff; /* 浅蓝色 */
+        text-shadow: 
+            0 2px 8px rgba(0, 0, 0, 0.6),
+            0 0 20px rgba(102, 126, 234, 0.4); /* 添加文字发光效果 */
+    }
+
+    /* 鼠标移开时下划线收缩（倒放） */
+    .title-main:not(:hover)::after {
+        width: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: 
+            width 0.3s ease-out, 
+            left 0.3s ease-out, 
+            box-shadow 0.3s ease-out; /* 添加阴影过渡 */
+    }
+
+    /* 可选：添加文字渐变效果 */
+    .title-main {
+        background: linear-gradient(135deg, #ffffff 0%, #a0a0ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: none;
+    }
+
+    .title-main:hover {
+        background: linear-gradient(135deg, #ffffff 0%, #8899ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* 新增记录按钮 */
+    .add-record-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 
+            0 6px 20px rgba(0, 0, 0, 0.4),
+            0 2px 8px rgba(102, 126, 234, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+    }
+
+    /* 按钮悬停效果 */
+    .add-record-btn:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        transform: translateY(-2px);
+        box-shadow: 
+            0 10px 25px rgba(102, 126, 234, 0.4),
+            0 4px 12px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 0 2px rgba(102, 126, 234, 0.2);
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .add-record-btn:hover::before {
+        transform: scale(1.2) rotate(90deg);
+        text-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
+    }
+
+    /* 按钮点击效果 */
+    .add-record-btn:active {
+        transform: translateY(0);
+        box-shadow: 
+            0 4px 12px rgba(0, 0, 0, 0.4),
+            0 1px 4px rgba(102, 126, 234, 0.25),
+            inset 0 1px 2px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(135deg, #5a6edb 0%, #6a4198 100%);
+    }
+
+    /* 按钮光效背景 - 深色模式调整 */
+    .add-record-btn::after {
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.15),
+            transparent
+        );
+    }
+
+    /* 按钮文字 */
+    .add-record-btn span {
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        color: #ffffff;
+    }
+
+    /* 添加发光边框动画 */
+    .add-record-btn::before {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* 悬停时添加脉冲动画 */
+    .add-record-btn:hover {
+        animation: buttonPulse 1.5s infinite;
+    }
+
+    /* 按钮背景层增强 */
+    .add-record-btn {
+        background-image: 
+            linear-gradient(135deg, #667eea 0%, #764ba2 100%),
+            radial-gradient(circle at top right, rgba(118, 75, 162, 0.4) 0%, transparent 70%);
+        background-blend-mode: overlay;
+    }
+
+    /* #logs {
+        background: white
+    } */
+
+    #logs thead tr {
+        background: var(--blue_purple);
+    }
+
+    #logs td {
+        color: #e0e0ff;
+    }
+
+    #logs tbody tr {
+        /* background-color: rgba(255, 255, 255, 0.8); */
+        backdrop-filter: blur(2px);
+        background-color: rgba(30, 30, 50, 0.9);
+    }
+
+    #logs tbody tr::after {
+        content: none;
+    }
+
+    #logs tbody tr:hover {
+        /* background-color: rgba(248, 249, 250, 0.9); */
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        background-color: rgba(40, 40, 70, 0.95);
+    }
+
+    #logs tbody tr:nth-child(even) {
+        /* background-color: rgba(249, 249, 249, 0.8); */
+        background-color: rgba(25, 25, 45, 0.9);
+    }
+
+    #logs tbody tr:nth-child(even):hover {
+        /* background-color: rgba(240, 240, 240, 0.9); */
+        background-color: rgba(35, 35, 65, 0.95);
+    }
+
+    .remove-log-btn {
+        position: absolute;
+        top: -6px;
+        left: -6px;
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
+        color: #ffffff;
+        border: none;
+        border-radius: 0 0 12px 0;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        box-shadow: 
+            -2px 2px 8px rgba(0, 0, 0, 0.4),
+            inset 1px -1px 2px rgba(255, 255, 255, 0.2),
+            0 0 0 1px rgba(255, 107, 107, 0.3);
+        transform: rotate(45deg) scale(0.85);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 2;
+        overflow: hidden;
+        opacity: 0;
+    }
+
+    #logs tbody tr:hover .remove-log-btn {
+        opacity: 1;
+        transform: rotate(45deg) scale(1);
+    }
+
+    .remove-log-btn:hover {
+        background: linear-gradient(135deg, #ff8787 0%, #d87093 100%);
+        color: #ffffff;
+        box-shadow: 
+            -3px 3px 12px rgba(0, 0, 0, 0.5),
+            inset 2px -2px 3px rgba(255, 255, 255, 0.3),
+            0 0 0 2px rgba(255, 107, 107, 0.5);
+        transform: rotate(45deg) scale(1.05) !important;
+    }
+
+    .remove-log-btn::before {
+        content: "×";
+        transform: rotate(-45deg);
+        font-size: 20px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .remove-log-btn:active {
+        background: linear-gradient(135deg, #ff5252 0%, #b23c5f 100%);
+        transform: rotate(45deg) scale(0.95) !important;
+        box-shadow: 
+            -1px 1px 4px rgba(0, 0, 0, 0.3),
+            inset 0 0 3px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(255, 107, 107, 0.4);
+    }
+
+    .remove-log-btn::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, transparent 70%, rgba(0, 0, 0, 0.2) 70%);
+        border-radius: 0 0 12px 0;
+        pointer-events: none;
+    }
+
+    .remove-log-btn:hover::after {
+        background: linear-gradient(135deg, transparent 70%, rgba(255, 255, 255, 0.1) 70%);
+    }
+
+    .tr-removing {
+        animation: tearOut 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        transform-origin: top left;
+        position: relative;
+        z-index: 1;
+    }
+
+    @keyframes tearOut {
+        0% {
+            opacity: 1;
+            transform: translateX(0) translateY(0) rotate(0deg);
+            filter: brightness(1);
+            background-color: rgba(40, 40, 60, 0.9);
+        }
+        30% {
+            opacity: 0.9;
+            transform: translateX(-10px) translateY(5px) rotate(-2deg);
+            filter: brightness(1.1) hue-rotate(-10deg);
+            background-color: rgba(60, 40, 40, 0.8);
+        }
+        60% {
+            opacity: 0.7;
+            transform: translateX(-30px) translateY(15px) rotate(-8deg);
+            filter: brightness(1.2) hue-rotate(-20deg);
+            background-color: rgba(80, 40, 40, 0.6);
+        }
+        100% {
+            opacity: 0;
+            transform: translateX(100px) translateY(-50px) rotate(-15deg) scale(0.8);
+            filter: brightness(1.3) hue-rotate(-30deg);
+            background-color: rgba(100, 40, 40, 0);
+            height: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+    }
+
+    .tr-removing .remove-log-btn {
+        animation: buttonShrink 0.3s ease forwards;
+    }
+
+    @keyframes buttonShrink {
+        0% {
+            transform: rotate(45deg) scale(1);
+            opacity: 1;
+        }
+        50% {
+            background: linear-gradient(135deg, #ff3333 0%, #ff0066 100%);
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.7);
+        }
+        100% {
+            transform: rotate(45deg) scale(0);
+            opacity: 0;
+        }
+    }
+
+
+    .remove-log-btn:hover {
+        animation: buttonPulseDark 1.5s infinite;
+    }
+
+    @media (max-width: 768px) {
+        
+        .remove-log-btn {
+            width: 28px;
+            height: 28px;
+            top: -4px;
+            left: -4px;
+            font-size: 14px;
+            border-radius: 0 0 8px 0;
+            transform: rotate(45deg) scale(0.7);
+            background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
+            color: #ffffff;
+            box-shadow: 
+                -1px 1px 4px rgba(0, 0, 0, 0.3),
+                inset 1px -1px 2px rgba(255, 255, 255, 0.2),
+                0 0 0 1px rgba(255, 107, 107, 0.3);
+        }
+
+        #logs tbody tr:hover .remove-log-btn {
+            transform: rotate(45deg) scale(0.85);
+            opacity: 1;
+        }
+
+        .remove-log-btn:hover {
+            transform: rotate(45deg) scale(0.9) !important;
+            background: linear-gradient(135deg, #ff8787 0%, #d87093 100%);
+            box-shadow: 
+                -2px 2px 6px rgba(0, 0, 0, 0.4),
+                inset 2px -2px 3px rgba(255, 255, 255, 0.3),
+                0 0 0 2px rgba(255, 107, 107, 0.5);
+        }
+
+        .remove-log-btn::before {
+            font-size: 16px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .remove-log-btn:active {
+            background: linear-gradient(135deg, #ff5252 0%, #b23c5f 100%);
+            transform: rotate(45deg) scale(0.85) !important;
+            box-shadow: 
+                -1px 1px 3px rgba(0, 0, 0, 0.3),
+                inset 0 0 2px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 107, 107, 0.4);
+        }
+
+        /* 移动端减小动画幅度 */
+        .tr-removing {
+            animation: tearOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes tearOut {
+            0% {
+                opacity: 1;
+                transform: translateX(0) translateY(0) rotate(0deg);
+                filter: brightness(1);
+                background-color: rgba(40, 40, 60, 0.9);
+            }
+            30% {
+                opacity: 0.9;
+                transform: translateX(-6px) translateY(3px) rotate(-1deg);
+                filter: brightness(1.1) hue-rotate(-5deg);
+                background-color: rgba(60, 40, 40, 0.8);
+            }
+            60% {
+                opacity: 0.7;
+                transform: translateX(-15px) translateY(8px) rotate(-4deg);
+                filter: brightness(1.2) hue-rotate(-10deg);
+                background-color: rgba(80, 40, 40, 0.6);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(30px) translateY(-20px) rotate(-8deg) scale(0.7);
+                filter: brightness(1.3) hue-rotate(-15deg);
+                background-color: rgba(100, 40, 40, 0);
+                height: 0;
+                margin: 0;
+                padding: 0;
+                border: none;
+            }
+        }
+
+        /* 移动端按钮尺寸限制 */
+        .remove-log-btn {
+            min-width: 28px;
+            min-height: 28px;
+            max-width: 28px;
+            max-height: 28px;
+        }
+
+        /* 移动端增加按钮可见性 */
+        #logs tbody tr .remove-log-btn {
+            opacity: 0.7;
+        }
+
+        #logs tbody tr:hover .remove-log-btn,
+        #logs tbody tr:active .remove-log-btn {
+            opacity: 1;
+        }
+
+        /* 移动端触摸区域扩展 */
+        .remove-log-btn::after {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            right: -12px;
+            bottom: -12px;
+            z-index: -1;
+        }
+
+        /* 移动端简化脉冲动画 */
+        @keyframes buttonPulseDark {
+            0%, 100% {
+                box-shadow: 
+                    -1px 1px 4px rgba(0, 0, 0, 0.3),
+                    inset 1px -1px 2px rgba(255, 255, 255, 0.2),
+                    0 0 0 1px rgba(255, 107, 107, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    -1px 1px 6px rgba(255, 107, 107, 0.4),
+                    inset 1px -1px 2px rgba(255, 255, 255, 0.3),
+                    0 0 0 2px rgba(255, 107, 107, 0.5);
+            }
+        }
+
+        /* 移动端触摸反馈 */
+        @media (hover: none) and (pointer: coarse) {
+            .remove-log-btn {
+                opacity: 0.8 !important;
+            }
+            
+            .remove-log-btn:active {
+                animation: buttonPulseDark 0.3s ease;
+                transform: rotate(45deg) scale(0.9) !important;
+            }
+        }
+    }
+
+    #logs td.target .target-number {
+        background: rgba(40, 40, 60, 0.8);
+        color: #a0a0ff;
+        border: 1px solid #3a3a6a;
+    }
+
+    #logs td.target .target-name {
+        background: rgba(50, 50, 80, 0.6);
+        color: #b0b0e0;
+        border: 1px solid #444477;
+    }
+
+    #logs tr td.target .target-number:hover {
+        background: rgba(60, 60, 100, 0.9);
+        border-color: #667eea;
+        color: #a0a0ff;
+    }
+
+    #logs tr td.target .target-name:hover {
+        color: #8899ff;
+        background: rgba(70, 70, 110, 0.8); 
+        border-color: #5a5aaa;
+    }
+
+    #logs td.operator .operator-number {
+        background: rgba(40, 40, 60, 0.8); 
+        color: #a0a0ff; 
+        border: 1px solid #3a3a6a;
+    }
+
+    #logs td.operator .operator-name {
+        background: rgba(50, 50, 80, 0.6);
+        color: #b0b0e0;
+    }
+
+    #logs td.operator .operator-number:hover {
+        background: rgba(60, 60, 100, 0.9); 
+        border-color: #667eea;
+        color: #a0a0ff; 
+    }
+
+    #logs tr td.operator .operator-name:hover {
+        color: #8899ff;
+        background: rgba(70, 70, 110, 0.8); 
+        border-color: #5a5aaa;
+    }
+
+    #logs td div.group_id .group-number {
+        color: #c0c0ff;
+    }
+
+    #logs td div.group_id .group-name {
+        color: #a0a0d0;
+    }
+    
+    #logs td.duration {
+        color: #ffffa0;
+    }
+
+    #logs td.time {
+        color: #b0b0e0;
+    }
+
+    #logs td.reason {
+        color: #ffffff;
+    }
+
+    #logs td.image a {
+        background: var(--blue_purple)
+    }
+
+    #logs td.image a:hover {
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+
+    #backToTopBtn {
+        background-color: rgba(40, 40, 70, 0.9);
+        color: #a0a0ff;
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        box-shadow: 
+            0 2px 10px rgba(0, 0, 0, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+    }
+
+    #backToTopBtn.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    #backToTopBtn:hover {
+        background-color: rgba(102, 126, 234, 0.9);
+        color: white;
+        border-color: rgba(102, 126, 234, 0.5);
+        transform: translateY(-3px);
+        box-shadow: 
+            0 4px 15px rgba(102, 126, 234, 0.4),
+            0 0 0 2px rgba(102, 126, 234, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    #backToTopBtn:active {
+        transform: translateY(0);
+        box-shadow: 
+            0 2px 8px rgba(102, 126, 234, 0.3),
+            inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        background-color: rgba(92, 116, 224, 0.9);
+    }
+
+    #backToTopBtn svg {
+        filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
+        transition: all 0.3s ease;
+    }
+
+    #backToTopBtn:hover svg {
+        transform: translateY(-2px);
+        filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+    }
+
+    #backToTopBtn::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, 
+            rgba(102, 126, 234, 0.1), 
+            rgba(118, 75, 162, 0.1), 
+            rgba(102, 126, 234, 0.1));
+        border-radius: 50%;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    #backToTopBtn:hover::before {
+        opacity: 1;
+        animation: buttonGlow 2s ease-in-out infinite alternate;
+    }
+
+    /* 添加SVG图标颜色调整 */
+    #backToTopBtn svg {
+        fill: currentColor;
+    }
+
+    /* 悬停时添加脉冲效果 */
+    #backToTopBtn:hover {
+        animation: backToTopPulse 2s infinite;
+    }
+
+    /* 显示时的遮罩层 */
+    #form-overlay.active {
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(8px);
+    }
+
+    /* 表单整体样式 - 深色主题 */
+    form#edit {
+        background: linear-gradient(135deg, 
+            rgba(30, 30, 55, 0.98) 0%, 
+            rgba(40, 40, 70, 0.95) 100%);
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        box-shadow: 
+            0 20px 60px rgba(0, 0, 0, 0.5),
+            0 10px 30px rgba(102, 126, 234, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 0 1px rgba(102, 126, 234, 0.1);
+    }
+
+    /* 表单各部分容器 */
+    form#edit > div {
+        background: rgba(35, 35, 60, 0.7);
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    form#edit > div:hover {
+        background: rgba(45, 45, 75, 0.9);
+        box-shadow: 0 6px 18px rgba(102, 126, 234, 0.2);
+        border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    /* 标签样式 */
+    form#edit label {
+        color: #a0a0ff;
+    }
+
+    /* 输入框样式 */
+    form#edit input[type="text"],
+    form#edit input[type="number"],
+    form#edit input[type="datetime-local"] {
+        background: rgba(20, 20, 40, 0.8);
+        color: #e0e0ff;
+        border: 2px solid rgba(102, 126, 234, 0.3);
+        box-shadow: 
+            0 2px 8px rgba(0, 0, 0, 0.3),
+            inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 输入框聚焦效果 */
+    form#edit input:focus {
+        border-color: #667eea;
+        box-shadow: 
+            0 0 0 3px rgba(102, 126, 234, 0.2),
+            inset 0 1px 3px rgba(0, 0, 0, 0.3);
+        background: rgba(25, 25, 45, 0.9);
+    }
+
+    /* 只读输入框 */
+    form#edit input[readonly] {
+        background: rgba(30, 30, 50, 0.6);
+        color: #8888cc;
+        border-color: rgba(102, 126, 234, 0.1);
+    }
+
+    /* 原因输入框特殊样式 */
+    form#edit div#reason input {
+        color: #ffffff;
+    }
+
+    /* 图片上传区域 */
+    form#edit div#image {
+        background: rgba(40, 40, 65, 0.8);
+        border-color: rgba(102, 126, 234, 0.25);
+    }
+
+    /* 文件上传按钮 */
+    form#edit div#image input[name="image"]::file-selector-button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    form#edit div#image input[name="image"]::file-selector-button:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 图片预览区域 */
+    #imagePreview {
+        background: rgba(25, 25, 45, 0.8);
+        border: 1px solid rgba(102, 126, 234, 0.2);
+    }
+
+    /* 图片预览区域 - 空状态 */
+    #imagePreview.empty {
+        color: #8899ff;
+        background: rgba(30, 30, 50, 0.5);
+    }
+
+    /* 预览图片容器 */
+    .preview-item {
+        background: rgba(35, 35, 60, 0.9);
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    /* 提交按钮 */
+    form#edit input[type="submit"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        box-shadow: 
+            0 6px 20px rgba(102, 126, 234, 0.3),
+            0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    form#edit input[type="submit"]:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        box-shadow: 
+            0 8px 25px rgba(102, 126, 234, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    form#edit input[type="submit"]:disabled {
+        background: linear-gradient(135deg, #444477 0%, #333366 100%);
+        color: #8888aa;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 关闭按钮 */
+    #close-form {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        box-shadow: 
+            0 4px 12px rgba(0, 0, 0, 0.4),
+            inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+
+    #close-form:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        box-shadow: 
+            0 6px 18px rgba(102, 126, 234, 0.4),
+            inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    /* 表单标题样式 */
+    form#edit::before {
+        color: #a0a0ff;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 数据列表样式 */
+    datalist {
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        background: rgba(30, 30, 50, 0.9);
+    }
+
+    /* 表单分组标签 */
+    form#edit > div > label:first-child {
+        color: #8899ff;
+    }
+
+    form#edit > div > label:first-child::after {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    /* 删除按钮样式 */
+    .remove-btn {
+        background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .remove-btn:hover {
+        background: linear-gradient(135deg, #ff3838 0%, #ff1e1e 100%);
+        box-shadow: 0 3px 8px rgba(255, 56, 56, 0.4);
+    }
+
+    /* 添加表单发光边框效果 */
+    form#edit {
+        position: relative;
+    }
+
+    form#edit::after {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        right: -1px;
+        bottom: -1px;
+        background: linear-gradient(135deg, 
+            rgba(102, 126, 234, 0.1), 
+            rgba(118, 75, 162, 0.1), 
+            rgba(102, 126, 234, 0.1));
+        border-radius: 21px;
+        z-index: -1;
+        animation: formGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes formGlow {
+        0% {
+            opacity: 0.5;
+        }
+        100% {
+            opacity: 0.8;
+        }
+    }
+
+    .card__layer--main::after {
+        border: 2px solid var(--electric-border-color);
+    }
+
+    #page {
+        /* background: rgba(255, 255, 255, 0.9); */
+        background: rgba(20, 20, 40, 0.8);
+        border: 1px solid rgba(100, 100, 200, 0.3);
+    }
+
+    #page button {
+        background-color: rgba(40, 40, 70, 0.9); 
+        color: #a0a0ff; 
+        border: 1px solid #4a4a8a;
+    }
+
+    /* 页码按钮悬停样式 */
+    #page button:hover:not(:disabled) {
+        background-color: rgba(60, 60, 100, 0.9);
+    }
+
+    /* 当前页码按钮样式 */
+    #page button.active {
+        background-color: #4a4a9a;
+        color: #ffffff;
+    }
+
+    #page button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: rgba(40, 40, 70, 0.6); 
+        color: #6666aa;
+        border-color: #444477;
+    }
+    
+    #limitCurrent {
+        background: rgba(40, 40, 70, 0.9); 
+        border: 2px solid #4a4a8a;
+        color: #c0c0ff; 
+    }
+
+    #limitOptions {
+        background: rgba(30, 30, 55, 0.95); 
+        border: 2px solid #4a4a8a;
+    }
+
+    .limit-option.selected {
+        background: var(--blue_purple);
+    }
+
+    #limitCurrent:hover {
+        border-color: #667eea;
+        background: rgba(60, 60, 100, 0.95);
+        box-shadow: 0 2px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .limit-option:hover {
+        background: rgba(80, 80, 140, 0.8);
+        color: #a0a0ff; 
+        font-weight: 600;
+    }
+}
