@@ -791,7 +791,7 @@ class InitializeTable {
           if (success === true) {
             // 更新risk
             Object.entries(result.risk).forEach(([key, value]) => {
-              this.InitializeTable.count_risk[key] = value;
+              this.count_risk[key] = value;
             });
 
             const targetSpan = document.querySelectorAll("span.target-number");
