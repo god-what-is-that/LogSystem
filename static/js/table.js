@@ -1611,7 +1611,8 @@ class InitializeEditForm {
 
   // 更新risk值
   updateRisk(risk, span) {
-    if (span.textContent in risk) {
+    console.log(span.textContent)
+    if (Number(span.textContent) in risk) {
       const tr = span.closest("tr");
       const old_container = span.closest("div.target-info");
 
@@ -1656,6 +1657,8 @@ class InitializeEditForm {
 
         const targetSpan = document.querySelectorAll("span.target-number");
         targetSpan.forEach((span) => {
+          console.log(span)
+          console.log(response.risk)
           this.updateRisk(response.risk, span);
         });
 
