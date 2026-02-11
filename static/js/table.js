@@ -796,7 +796,7 @@ class InitializeTable {
 
             const targetSpan = document.querySelectorAll("span.target-number");
             targetSpan.forEach((span) => {
-              this.updateRisk(result.risk, span);
+              this.InitializeEditForm.updateRisk(result.risk, span);
             });
 
             // 播放删除动画并等待播放完后删除
