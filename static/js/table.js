@@ -1612,6 +1612,7 @@ class InitializeEditForm {
   // 更新risk值
   updateRisk(risk, span) {
     console.log(span.textContent)
+    console.log(span.textContent in risk)
     if (Number(span.textContent) in risk) {
       const tr = span.closest("tr");
       const old_container = span.closest("div.target-info");
@@ -1630,7 +1631,7 @@ class InitializeEditForm {
       tr.dataset.original = JSON.stringify(match);
       tr.dataset.match = JSON.stringify(processed);
       old_container.replaceWith(container);
-      this.InitializeTable.count_risk[span.textContent] = value;
+      this.InitializeTable.count_risk[span.textContent] = risk[span.textContent];
     }
   }
 
