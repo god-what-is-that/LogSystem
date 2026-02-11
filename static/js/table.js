@@ -1613,7 +1613,7 @@ class InitializeEditForm {
   updateRisk(risk, span) {
     console.log(span.textContent)
     console.log(span.textContent in risk)
-    if (Number(span.textContent) in risk) {
+    if (span.textContent in risk) {
       const tr = span.closest("tr");
       const old_container = span.closest("div.target-info");
 
@@ -1652,6 +1652,7 @@ class InitializeEditForm {
         formOverlay.className = "hide";
 
         // 更新risk
+        console.log(response)
         Object.entries(response.risk).forEach(([key, value]) => {
           this.InitializeTable.count_risk[key] = value;
         });

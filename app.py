@@ -284,6 +284,7 @@ class AppClient:
                 risk[target] = {}
                 async with aiosqlite.connect(self.logs.db_name) as conn:
                     risk[target]["count"], risk[target]["risk"], risk[target]["state"] = await self.logs.async_get_log_count_by_qq(conn, "target", target, True, True, True)
+            print(risk)
 
             return jsonify({"success": success, "message": message, "risk": risk})
 
