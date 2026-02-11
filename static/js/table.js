@@ -789,20 +789,21 @@ class InitializeTable {
           const message = result.message;
 
           if (success === true) {
-            // 更新risk
-            Object.entries(result.risk).forEach(([key, value]) => {
-              this.count_risk[key] = value;
-            });
-
-            const targetSpan = document.querySelectorAll("span.target-number");
-            targetSpan.forEach((span) => {
-              this.InitializeEditForm.updateRisk(result.risk, span);
-            });
 
             // 播放删除动画并等待播放完后删除
             newlog.classList.add("tr-removing");
             setTimeout(() => {
               newlog.remove();
+
+              // 更新risk
+              Object.entries(result.risk).forEach(([key, value]) => {
+                this.count_risk[key] = value;
+              });
+
+              const targetSpan = document.querySelectorAll("span.target-number");
+              targetSpan.forEach((span) => {
+                this.InitializeEditForm.updateRisk(result.risk, span);
+              });
 
               // 显示成功提示
               Swal.fire({
