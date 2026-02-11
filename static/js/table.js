@@ -411,9 +411,14 @@ class InitializeTable {
     if (match) {
       const newlog = document.createElement("tr");
       newlog.className = "log";
+
+      let processed = {}
+
       this.values.forEach((item, index) => {
         let field = newlog.insertCell(index);
         field.className = item;
+
+        processed[item] = match [item]
 
         if (item === "mode") {
           // 添加模式对应的颜色类
@@ -423,6 +428,7 @@ class InitializeTable {
           mode.textContent = match[item];
           field.className = "mode-cell";
           field.appendChild(mode);
+
           return;
         }
 
@@ -463,7 +469,7 @@ class InitializeTable {
             field.textContent = "无";
             field.className = "no-group";
 
-            match[item] = ""
+            processed[item] = ""
             // let row = field.parentElement
             // let modeTd = row.querySelector('td.mode')
             // modeTd.style.marginTop = '42.5px'
@@ -481,14 +487,14 @@ class InitializeTable {
               /^(\d+)(?:\s*[（(](.+?)[）)])?$/,
             );
 
-            match[item] = {}
+            processed[item] = {}
 
             if (matchResult) {
               const qqNum = matchResult[1];
               const groupName = matchResult[2];
 
-              match[item]["group_id"] = parseInt(qqNum)
-              match[item]["nickname"] = groupName
+              processed[item]["group_id"] = parseInt(qqNum)
+              processed[item]["nickname"] = groupName
 
               if (qqNum == 833970143) {
                 field.dataset.groupType = "large";
@@ -539,8 +545,8 @@ class InitializeTable {
                 field.textContent = groupText;
                 field.classList.add("no-avatar");
 
-                match[item]["group_id"] = groupText
-                match[item]["nickname"] = ""
+                processed[item]["group_id"] = groupText
+                processed[item]["nickname"] = ""
             }
           }
           return;
@@ -561,14 +567,14 @@ class InitializeTable {
             /^(\d+)(?:\s*[（(](.+?)[）)])?$/,
           );
 
-          match[item] = {}
+          processed[item] = {}
 
           if (matchResult) {
             const qqNum = matchResult[1];
             const operatorName = matchResult[2];
 
-            match[item]["operator"] = parseInt(qqNum)
-            match[item]["nickname"] = operatorName
+            processed[item]["operator"] = parseInt(qqNum)
+            processed[item]["nickname"] = operatorName
 
             // 创建容器
             const container = document.createElement("div");
@@ -603,113 +609,16 @@ class InitializeTable {
           } else {
             field.textContent = operatorText;
 
-            match[item]["operator"] = operatorText
-            match[item]["nickname"] = ""
+            processed[item]["operator"] = operatorText
+            processed[item]["nickname"] = ""
           }
           return;
         }
 
         if (item === "target") {
-          const targetText = match[item].toString();
-
-          // 解析格式："123456789（目标名称）" 或纯数字
-          const matchResult = targetText.match(
-            /^(\d+)(?:\s*[（(](.+?)[）)])?$/,
-          );
-
-          match[item] = {}
-
-          if (matchResult) {
-            const qqNum = matchResult[1];
-            const targetName = matchResult[2];
-
-            match[item]["target"] = parseInt(qqNum)
-            match[item]["nickname"] = targetName
-
-            // 获取用户数据
-            let userData = count_risk[qqNum] || {
-              count: 0,
-              risk: 0.5,
-              state: "存活",
-            };
-            const count = userData.count;
-            const risk = userData.risk;
-            const state = userData.state;
-
-            // 计算风险等级
-            let riskLevel = "low";
-            let riskLabel = "低风险";
-            if (risk > 2) {
-              riskLevel = "high";
-              riskLabel = "高风险";
-            } else if (risk > 1) {
-              riskLevel = "medium";
-              riskLabel = "中风险";
-            }
-
-            // 获取状态对应的颜色和图标
-            const stateConfig = {
-              存活: { class: "alive", icon: "🟢", color: "#4CAF50" },
-              已踢出: { class: "kicked", icon: "🟡", color: "#FF9800" },
-              已拉黑: { class: "banned", icon: "🔴", color: "#F44336" },
-            };
-            const stateInfo = stateConfig[state] || stateConfig["存活"];
-
-            // 创建容器
-            const container = document.createElement("div");
-            container.className = "target-info";
-            container.dataset.riskLevel = riskLevel;
-            container.dataset.state = stateInfo.class;
-
-            // 风险徽章
-            const riskBadge = document.createElement("div");
-            riskBadge.className = `target-risk-badge risk-${riskLevel}`;
-            riskBadge.innerHTML = `
-                            <span class="risk-icon">${riskLevel === "high" ? "⚠️" : riskLevel === "medium" ? "🔶" : "🔵"}</span>
-                            <span class="risk-text">${riskLabel}</span>
-                            <span class="risk-score">${risk.toFixed(1)}</span>
-                        `;
-            container.appendChild(riskBadge);
-
-            // 主要信息区域
-            const mainInfo = document.createElement("div");
-            mainInfo.className = "target-main";
-
-            // QQ号
-            const numberSpan = document.createElement("span");
-            numberSpan.className = "target-number";
-            numberSpan.textContent = qqNum;
-            this.addCopyToClipboard(numberSpan);
-            mainInfo.appendChild(numberSpan);
-
-            // 昵称（如果有）
-            if (targetName) {
-              const nameSpan = document.createElement("span");
-              nameSpan.className = "target-name";
-              nameSpan.textContent = targetName;
-              this.addCopyToClipboard(nameSpan);
-              mainInfo.appendChild(nameSpan);
-            }
-
-            // 状态指示器
-            const stateIndicator = document.createElement("span");
-            stateIndicator.className = `target-state state-${stateInfo.class}`;
-            stateIndicator.textContent = `${stateInfo.icon} ${state}`;
-            stateIndicator.style.setProperty("--state-color", stateInfo.color);
-            mainInfo.appendChild(stateIndicator);
-
-            container.appendChild(mainInfo);
-
-            // 悬停提示
-            container.title = `QQ: ${targetText}\n违规记录: ${count} 条\n风险值: ${risk.toFixed(1)} (${riskLabel})\n状态: ${state}`;
-
-            field.appendChild(container);
-          } else {
-            field.textContent = targetText;
-
-            match[item]["target"] = targetText
-            match[item]["nickname"] = ""
-          }
+          let container
+          container, match, processed = this.createTarget(item, match, processed, count_risk)
+          field.appendChild(container)
           return;
         }
 
@@ -721,7 +630,8 @@ class InitializeTable {
       });
       
       // 数据储存在data方便表单读取
-      newlog.dataset.match = JSON.stringify(match)
+      newlog.dataset.match = JSON.stringify(processed)
+      newlog.dataset.original = JSON.stringify(match)
       newlog.dataset.log_id = match["id"]
 
       // 增加删除log按钮
@@ -732,6 +642,110 @@ class InitializeTable {
       newlog.appendChild(remove_btn)
 
       return newlog
+    }
+  }
+
+  createTarget(item, match, processed, count_risk) {
+    const targetText = match[item].toString();
+
+    // 解析格式："123456789（目标名称）" 或纯数字
+    const matchResult = targetText.match(
+      /^(\d+)(?:\s*[（(](.+?)[）)])?$/,
+    );
+
+    processed[item] = {}
+    const container = document.createElement("div");
+
+    if (matchResult) {
+      const qqNum = matchResult[1];
+      const targetName = matchResult[2];
+
+      processed[item]["target"] = parseInt(qqNum)
+      processed[item]["nickname"] = targetName
+
+      // 获取用户数据
+      let userData = count_risk[qqNum] || {
+        count: 1,
+        risk: 0.5,
+        state: "存活",
+      };
+      const count = userData.count;
+      const risk = userData.risk;
+      const state = userData.state;
+
+      // 计算风险等级
+      let riskLevel = "low";
+      let riskLabel = "低风险";
+      if (risk > 2) {
+        riskLevel = "high";
+        riskLabel = "高风险";
+      } else if (risk > 1) {
+        riskLevel = "medium";
+        riskLabel = "中风险";
+      }
+
+      // 获取状态对应的颜色和图标
+      const stateConfig = {
+        存活: { class: "alive", icon: "🟢", color: "#4CAF50" },
+        已踢出: { class: "kicked", icon: "🟡", color: "#FF9800" },
+        已拉黑: { class: "banned", icon: "🔴", color: "#F44336" },
+      };
+      const stateInfo = stateConfig[state] || stateConfig["存活"];
+
+      // 创建容器
+      container.className = "target-info";
+      container.dataset.riskLevel = riskLevel;
+      container.dataset.state = stateInfo.class;
+
+      // 风险徽章
+      const riskBadge = document.createElement("div");
+      riskBadge.className = `target-risk-badge risk-${riskLevel}`;
+      riskBadge.innerHTML = `
+                      <span class="risk-icon">${riskLevel === "high" ? "⚠️" : riskLevel === "medium" ? "🔶" : "🔵"}</span>
+                      <span class="risk-text">${riskLabel}</span>
+                      <span class="risk-score">${risk.toFixed(1)}</span>
+                  `;
+      container.appendChild(riskBadge);
+
+      // 主要信息区域
+      const mainInfo = document.createElement("div");
+      mainInfo.className = "target-main";
+
+      // QQ号
+      const numberSpan = document.createElement("span");
+      numberSpan.className = "target-number";
+      numberSpan.textContent = qqNum;
+      this.addCopyToClipboard(numberSpan);
+      mainInfo.appendChild(numberSpan);
+
+      // 昵称（如果有）
+      if (targetName) {
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "target-name";
+        nameSpan.textContent = targetName;
+        this.addCopyToClipboard(nameSpan);
+        mainInfo.appendChild(nameSpan);
+      }
+
+      // 状态指示器
+      const stateIndicator = document.createElement("span");
+      stateIndicator.className = `target-state state-${stateInfo.class}`;
+      stateIndicator.textContent = `${stateInfo.icon} ${state}`;
+      stateIndicator.style.setProperty("--state-color", stateInfo.color);
+      mainInfo.appendChild(stateIndicator);
+
+      container.appendChild(mainInfo);
+
+      // 悬停提示
+      container.title = `QQ: ${targetText}\n违规记录: ${count} 条\n风险值: ${risk.toFixed(1)} (${riskLabel})\n状态: ${state}`;
+
+      return container, match, processed
+    } else {
+      container.textContent = targetText;
+
+      processed[item]["target"] = targetText
+      processed[item]["nickname"] = ""
+      return container, match, processed
     }
   }
 
@@ -1563,7 +1577,6 @@ class InitializeEditForm {
     document.getElementById("close-form").disabled = true
 
     const match = this.packMatch(submit.parentElement)
-    console.log(match)
     
     const response = await fetch("https://curator.ip-ddns.com:8000/api/edit", {
       method: "POST",
@@ -1593,6 +1606,30 @@ class InitializeEditForm {
         
         const formOverlay = document.getElementById("form-overlay");
         formOverlay.className = "hide";
+        
+        // 添加risk
+        Object.entries(response.risk).forEach(([key, value]) => {
+          if (this.InitializeTable.count_risk[key]) {
+            const targetSpan = Array.from(document.querySelectorAll('span.target-number')).filter(span => span.textContent === key);
+            targetSpan.forEach((span) => {
+              const tr = span.closest('tr')
+              const old_container = span.closest('div.target-info')
+
+              let match = JSON.parse(tr.dataset.original)
+              let processed = JSON.parse(tr.dataset.match)
+              let container
+              const item = "target"
+              container, match, processed = this.createTarget(item, match, processed, response.risk)
+
+              tr.dataset.original = JSON.stringify(match)
+              tr.dataset.match = JSON.stringify(processed)
+              old_container.replaceWith(container)
+              this.InitializeTable.count_risk[key] = value
+            })
+          } else {
+            this.InitializeTable.count_risk[key] = value
+          }
+        })
 
         // 创建新行
         const newRow = this.InitializeTable.addLog(response.match);

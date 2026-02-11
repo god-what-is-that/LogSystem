@@ -245,11 +245,19 @@ class AppClient:
             action = "edit" if match["id"] else "add"
             success, message, log = await self.AppToLog.edit_log(match, action)
 
+            # 查询目标QQ的risk
+            risk = None
+            if success:
+                target = match["target"].split('（')[0]
+                async with aiosqlite.connect(self.logs.db_name) as conn:
+                    risk["count"], risk["risk"], risk["state"] = await self.logs.async_get_log_count_by_qq(conn, "target", target, True, True, True)
+                risk = {target: risk}
+
             # 打印所有线程和任务
             # await self.AppToLog.print_all_tasks()
             # await self.AppToLog.get_threads_info()
 
-            return jsonify({"success": success, "message": message, "match": log, "action": action})
+            return jsonify({"success": success, "message": message, "match": log, "action": action, "risk": risk})
 
         @self.app.route('/api/delete', methods=['POST'])
         async def delete_log():
