@@ -1754,13 +1754,21 @@ class LogSystem:
             else:
                 return self.style.get("action_error2").format(action=action)
     
+    def regexp(self, pattern, text):
+        """SQLite正则表达式匹配函数"""
+        if text is None or pattern is None:
+            return 0
+        return 1 if re.search(pattern, str(text)) else 0
+
     def get_log_count_by_qq(self, field, target: str, ifcount: bool = True, iftotal: bool = True, ifstate: bool = False, mode: int = 1):
         """根据字段查询记录数量"""
         with sqlite3.connect(self.db_name) as conn:
+            conn.create_function("REGEXP", 2, self.regexp)
             cursor = conn.cursor()
             # 查询所有相关记录
             if mode == 1:
-                sql = "LIKE ? || '%'"
+                sql = "REGEXP ?"
+                target = f'^{re.escape(str(target))}([^0-9]|$)'
             elif mode == 2:
                 sql = "LIKE '%' || ? || '%'"
             else:
@@ -1797,8 +1805,10 @@ class LogSystem:
 
     async def async_get_log_count_by_qq(self, conn, field, target: str, ifcount: bool = True, iftotal: bool = True, ifstate: bool = False, mode: int = 1):
         """根据字段查询记录数量"""
+        await conn.create_function("REGEXP", 2, self.regexp)
         if mode == 1:
-            sql = "LIKE ? || '%'"
+            sql = "REGEXP ?"
+            target = f'^{re.escape(str(target))}([^0-9]|$)'
         elif mode == 2:
             sql = "LIKE '%' || ? || '%'"
         else:
@@ -1986,7 +1996,8 @@ class LogSystem:
         # 查找模式1是匹配开头为value的，2是匹配中间包含value的，3是完全匹配value的
         sql = None
         if mode == 1:
-            sql = "LIKE ? || '%'"
+            sql = "REGEXP ?"
+            value = f'^{re.escape(str(value))}([^0-9]|$)'
         elif mode == 2:
             sql = "LIKE '%' || ? || '%'"
         else:
@@ -1994,6 +2005,7 @@ class LogSystem:
 
         with sqlite3.connect(self.db_name) as conn:
             conn.row_factory = sqlite3.Row
+            conn.create_function("REGEXP", 2, self.regexp)
             cursor = conn.cursor()
             cursor.execute(f'''
                 SELECT id, mode, target, reason, operator, duration, time, group_id
