@@ -1,4 +1,4 @@
-// 检查表格宽度（测试用） 
+// 检查表格宽度（测试用）
 function getwidth() {
   const a = document.getElementById("logs");
   console.log(a.offsetWidth);
@@ -418,7 +418,7 @@ class InitializeTable {
         let field = newlog.insertCell(index);
         field.className = item;
 
-        processed[item] = match [item]
+        processed[item] = match[item]
 
         if (item === "mode") {
           // 添加模式对应的颜色类
@@ -433,6 +433,7 @@ class InitializeTable {
         }
 
         if (item === "image") {
+          processed["images_path"] = match["images_path"]
           let length = Object.keys(match.images_path).length;
           if (match.images_path && length > 0) {
             const entries = Object.entries(match.images_path);
