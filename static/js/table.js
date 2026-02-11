@@ -1630,7 +1630,7 @@ class InitializeEditForm {
       tr.dataset.original = JSON.stringify(match);
       tr.dataset.match = JSON.stringify(processed);
       old_container.replaceWith(container);
-      this.InitializeTable.count_risk[key] = value;
+      this.InitializeTable.count_risk[span.textContent] = value;
     }
   }
 
