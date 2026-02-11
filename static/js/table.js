@@ -790,13 +790,13 @@ class InitializeTable {
 
           if (success === true) {
             // 更新risk
-            Object.entries(response.risk).forEach(([key, value]) => {
+            Object.entries(result.risk).forEach(([key, value]) => {
               this.InitializeTable.count_risk[key] = value;
             });
 
             const targetSpan = document.querySelectorAll("span.target-number");
             targetSpan.forEach((span) => {
-              this.updateRisk(response.risk, span);
+              this.updateRisk(result.risk, span);
             });
 
             // 播放删除动画并等待播放完后删除
@@ -1266,7 +1266,6 @@ class InitializeEditForm {
   // 检查时长，逻辑和log系统的一样
   checkduration(input) {
     const value = input.value;
-    console.log(value);
     if (value !== "") {
       const pattern = /^\d+(\.\d)?[hsmdMw]$/;
 
@@ -1611,8 +1610,6 @@ class InitializeEditForm {
 
   // 更新risk值
   updateRisk(risk, span) {
-    console.log(span.textContent)
-    console.log(span.textContent in risk)
     if (span.textContent in risk) {
       const tr = span.closest("tr");
       const old_container = span.closest("div.target-info");
@@ -1652,15 +1649,12 @@ class InitializeEditForm {
         formOverlay.className = "hide";
 
         // 更新risk
-        console.log(response)
         Object.entries(response.risk).forEach(([key, value]) => {
           this.InitializeTable.count_risk[key] = value;
         });
 
         const targetSpan = document.querySelectorAll("span.target-number");
         targetSpan.forEach((span) => {
-          console.log(span)
-          console.log(response.risk)
           this.updateRisk(response.risk, span);
         });
 
