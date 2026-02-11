@@ -278,7 +278,7 @@ class InitializeTable {
     }
     
     link._isPreviewing = true; // 标记为“正在预览”
-    console.log('预览正在加载中，请稍候...');
+    // console.log('预览正在加载中，请稍候...');
     document.body.style.pointerEvents = 'none';
     document.body.style.cursor = 'wait';
     
@@ -789,6 +789,14 @@ class InitializeTable {
 
           if (success === true) {
             
+            // 更新risk
+            Object.entries(response.risk).forEach(([key, value]) => {this.InitializeTable.count_risk[key] = value})
+
+            const targetSpan = document.querySelectorAll('span.target-number')
+            targetSpan.forEach((span) => {
+              this.updateRisk(response.risk, span)
+            })
+
             // 播放删除动画并等待播放完后删除
             newlog.classList.add('tr-removing');
             setTimeout(() => {
@@ -1590,6 +1598,25 @@ class InitializeEditForm {
     this.handleResponse(await response.json())
   }
 
+  // 更新risk值
+  updateRisk (risk, span) {
+    if (span.textContent in risk) {
+      const tr = span.closest('tr')
+      const old_container = span.closest('div.target-info')
+
+      let match = JSON.parse(tr.dataset.original)
+      let processed = JSON.parse(tr.dataset.match)
+      let container
+      const item = "target"
+      container, match, processed = this.createTarget(item, match, processed, risk)
+
+      tr.dataset.original = JSON.stringify(match)
+      tr.dataset.match = JSON.stringify(processed)
+      old_container.replaceWith(container)
+      this.InitializeTable.count_risk[key] = value
+    }
+  }
+  
   // 处理提交表单后，后端发来的返回值
   handleResponse (response) {
     try {
@@ -1607,28 +1634,12 @@ class InitializeEditForm {
         const formOverlay = document.getElementById("form-overlay");
         formOverlay.className = "hide";
         
-        // 添加risk
-        Object.entries(response.risk).forEach(([key, value]) => {
-          if (this.InitializeTable.count_risk[key]) {
-            const targetSpan = Array.from(document.querySelectorAll('span.target-number')).filter(span => span.textContent === key);
-            targetSpan.forEach((span) => {
-              const tr = span.closest('tr')
-              const old_container = span.closest('div.target-info')
+        // 更新risk
+        Object.entries(response.risk).forEach(([key, value]) => {this.InitializeTable.count_risk[key] = value})
 
-              let match = JSON.parse(tr.dataset.original)
-              let processed = JSON.parse(tr.dataset.match)
-              let container
-              const item = "target"
-              container, match, processed = this.createTarget(item, match, processed, response.risk)
-
-              tr.dataset.original = JSON.stringify(match)
-              tr.dataset.match = JSON.stringify(processed)
-              old_container.replaceWith(container)
-              this.InitializeTable.count_risk[key] = value
-            })
-          } else {
-            this.InitializeTable.count_risk[key] = value
-          }
+        const targetSpan = document.querySelectorAll('span.target-number')
+        targetSpan.forEach((span) => {
+          this.updateRisk(response.risk, span)
         })
 
         // 创建新行

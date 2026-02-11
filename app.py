@@ -243,15 +243,19 @@ class AppClient:
 
             # 根据是否有id判断是编辑还是添加
             action = "edit" if match["id"] else "add"
-            success, message, log = await self.AppToLog.edit_log(match, action)
+            success, message, log, old_target = await self.AppToLog.edit_log(match, action)
 
-            # 查询目标QQ的risk
-            risk = None
+            # 查询更改前后的目标QQ的risk
+            risk = {}
             if success:
-                target = match["target"].split('（')[0]
-                async with aiosqlite.connect(self.logs.db_name) as conn:
-                    risk["count"], risk["risk"], risk["state"] = await self.logs.async_get_log_count_by_qq(conn, "target", target, True, True, True)
-                risk = {target: risk}
+                targets = set()
+                targets.add(match["target"]["target"])
+                if old_target:
+                    targets.add(old_target)
+                for target in targets:
+                    async with aiosqlite.connect(self.logs.db_name) as conn:
+                        risk["count"], risk["risk"], risk["state"] = await self.logs.async_get_log_count_by_qq(conn, "target", target, True, True, True)
+                    risk[target] = risk
 
             # 打印所有线程和任务
             # await self.AppToLog.print_all_tasks()
@@ -272,9 +276,16 @@ class AppClient:
             if not id:
                 return redirect('/')
 
-            success, message = await self.AppToLog.delete_log(id)
+            success, message, target = await self.AppToLog.delete_log(id)
 
-            return jsonify({"success": success, "message": message})
+            # 查询目标QQ的risk
+            risk = {}
+            if success and target:
+                async with aiosqlite.connect(self.logs.db_name) as conn:
+                    risk["count"], risk["risk"], risk["state"] = await self.logs.async_get_log_count_by_qq(conn, "target", target, True, True, True)
+                risk[target] = risk
+
+            return jsonify({"success": success, "message": message, "risk": risk})
 
     def app_run(self, host, port):
 
@@ -377,10 +388,10 @@ class AppToLog():
     async def delete_log(self, id):
         success = False
         message = ""
+        old_target = None
 
         # 检查5分钟内是否有其他人更改过此log
         uid = session.get("uid")
-        print(uid)
         cache = self.logs.cache.get(id)
         if cache and cache != int(uid):
             operators = self.logs.style.get("operator_list")
@@ -400,15 +411,17 @@ class AppToLog():
             respond = await self.wait_for_respond(bridge)
             success = respond["success"]
             message = respond["message"]
+            old_target = respond["old_target"]
             self.logs.cache[id] = int(uid)
 
-        return success, message
+        return success, message, old_target
     
     # 编辑或添加log函数
     async def edit_log(self, match, action = "edit"):
         success = False
         message = ""
         log = {}
+        old_target = None
         id = match["id"]
         
         # 检查5分钟内是否有其他人更改过此log
@@ -418,12 +431,12 @@ class AppToLog():
             if cache and cache != int(uid):
                 operators = self.logs.style.get("operator_list")
                 message = f"{self.yaml_config.get("edit_error").format(id=id,operator=f'{cache}（{operators.get(cache)}）')}，{self.yaml_config.get("edit_error2")}"
-                return success, message, log
+                return success, message, log, old_target
         
         success, message, log = await self.check_nickname(match, action)
 
         if success == False:
-            return success, message, log
+            return success, message, log, old_target
 
         # 获取或新建该用户的队列
         bridge = self.app_queue.get(uid)
@@ -438,10 +451,11 @@ class AppToLog():
         success = respond["success"]
         message = respond["message"]
         log = respond.get("match") or {}
+        old_target = respond["old_target"] or log.get("target")
         
         self.logs.cache[id] = int(uid)
         
-        return success, message, log
+        return success, message, log, old_target
     
     # 获取昵称并检查参数是否合法
     async def check_nickname(self, match, action = "edit"):
