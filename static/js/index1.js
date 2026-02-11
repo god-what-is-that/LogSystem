@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", function() {
             if (response.ok && status === "success") {
                 location.reload(); 
             } else {
-                window.location.href = '/static/videos/1.mp4'
+                window.location.href = './static/videos/1.mp4'
                 // const videoUrl = "./static/videos/匿名tian粉丝服。招新。视频广告。.mp4";
                 // const overlay = document.createElement('div');
                 // overlay.style = `

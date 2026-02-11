@@ -195,7 +195,7 @@ class LogSystem:
             #     message = f'{message}\n{ifimage if ifimage else self.style.get("download_groups_image_succeess").format(group_id=f"{i}（{group}）")}'
 
             success = start_export()
-            message = f"{message}\n{self.style.get("export_excel_success") if success else self.style.get("export_excel_error")}{1}"
+            message = f"{message}\n{self.style.get("export_excel_success") if success else self.style.get("export_excel_error")}"
             response = self.bot.send_group_message(self.bot.config.get("QQgroup"), message)
 
         self.now_backup = False
@@ -1409,7 +1409,10 @@ class LogSystem:
                     iflegal = self.check_filename(name)
                     if iflegal:
                         return iflegal
-                return self.backup_without_locks(name)
+                message =  self.backup_without_locks(name)
+                success = start_export()
+                message = f"{message}\n{self.style.get("export_excel_success") if success else self.style.get("export_excel_error")}"
+                return message
             
             # 如果是delete，检查参数数量，id是否合法，执行删除函数
             elif field == "delete":
