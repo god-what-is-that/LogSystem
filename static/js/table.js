@@ -1,4 +1,4 @@
-// 检查表格宽度（测试用） 
+// 检查表格宽度（测试用）
 function getwidth() {
   const a = document.getElementById("logs");
   console.log(a.offsetWidth);
