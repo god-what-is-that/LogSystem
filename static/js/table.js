@@ -613,7 +613,7 @@ class InitializeTable {
 
         if (item === "target") {
           let container;
-          [container, match, processed] = this.InitializeTable.createTarget(
+          [container, match, processed] = this.createTarget(
             item,
             match,
             processed,
