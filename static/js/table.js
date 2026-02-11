@@ -617,7 +617,7 @@ class InitializeTable {
 
         if (item === "target") {
           let container
-          container, match, processed = this.createTarget(item, match, processed, count_risk)
+          [container, match, processed] = this.createTarget(item, match, processed, count_risk)
           field.appendChild(container)
           return;
         }
@@ -739,13 +739,13 @@ class InitializeTable {
       // 悬停提示
       container.title = `QQ: ${targetText}\n违规记录: ${count} 条\n风险值: ${risk.toFixed(1)} (${riskLabel})\n状态: ${state}`;
 
-      return container, match, processed
+      return [container, match, processed]
     } else {
       container.textContent = targetText;
 
       processed[item]["target"] = targetText
       processed[item]["nickname"] = ""
-      return container, match, processed
+      return [container, match, processed]
     }
   }
 
@@ -1608,7 +1608,7 @@ class InitializeEditForm {
       let processed = JSON.parse(tr.dataset.match)
       let container
       const item = "target"
-      container, match, processed = this.createTarget(item, match, processed, risk)
+      [container, match, processed] = this.createTarget(item, match, processed, risk)
 
       tr.dataset.original = JSON.stringify(match)
       tr.dataset.match = JSON.stringify(processed)

@@ -253,9 +253,9 @@ class AppClient:
                 if old_target:
                     targets.add(old_target)
                 for target in targets:
+                    risk[target] = {}
                     async with aiosqlite.connect(self.logs.db_name) as conn:
-                        risk["count"], risk["risk"], risk["state"] = await self.logs.async_get_log_count_by_qq(conn, "target", target, True, True, True)
-                    risk[target] = risk
+                        risk[target]["count"], risk[target]["risk"], risk[target]["state"] = await self.logs.async_get_log_count_by_qq(conn, "target", target, True, True, True)
 
             # 打印所有线程和任务
             # await self.AppToLog.print_all_tasks()
@@ -281,9 +281,9 @@ class AppClient:
             # 查询目标QQ的risk
             risk = {}
             if success and target:
+                risk[target] = {}
                 async with aiosqlite.connect(self.logs.db_name) as conn:
-                    risk["count"], risk["risk"], risk["state"] = await self.logs.async_get_log_count_by_qq(conn, "target", target, True, True, True)
-                risk[target] = risk
+                    risk[target]["count"], risk[target]["risk"], risk[target]["state"] = await self.logs.async_get_log_count_by_qq(conn, "target", target, True, True, True)
 
             return jsonify({"success": success, "message": message, "risk": risk})
 
