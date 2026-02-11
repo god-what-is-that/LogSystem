@@ -613,7 +613,7 @@ class InitializeTable {
 
         if (item === "target") {
           let container;
-          [container, match, processed] = this.createTarget(
+          [container, match, processed] = this.InitializeTable.createTarget(
             item,
             match,
             processed,
@@ -1620,7 +1620,7 @@ class InitializeEditForm {
       let processed = JSON.parse(tr.dataset.match);
       let container;
       const item = "target";
-      [container, match, processed] = this.createTarget(
+      [container, match, processed] = this.InitializeTable.createTarget(
         item,
         match,
         processed,
