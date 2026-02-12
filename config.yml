@@ -16,17 +16,19 @@ backup_file: backup
 image: static/images/logs
 styles: styles
 groups: static/images/groups
+notifications: static/config
 
 # 上次备份时间、备份周期、备份上限
-backup_time: '2026-02-07 15:34:27'
+backup_time: ''
 backup_delay: 7
 backup_limit: 10
 
 # 当前风格文件名
 style: normal
+notifications: normal
 
 # qq重连周期
 reconnect_delay: 30
 
 # 网站session加密密钥
-secret_key: "989c874b9e591a749f72a449c886b9167aaefe6160c56391fd87879757e5b15d"
+secret_key: ''

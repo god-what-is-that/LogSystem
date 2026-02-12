@@ -951,7 +951,7 @@ if __name__ == "__main__":
     client = OneBotClient(WS_URL, HTTP_URL, ACCESS_TOKEN, logs)
     logs.bot_init(client)
     
-    app = AppClient(logs, client)
+    app = AppClient(logs, client, config.get("notification"))
     client.app_init(app)
     # print("网站开之前")
     # app.AppToLog.sync_get_threads_info()

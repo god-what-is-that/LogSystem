@@ -15,7 +15,7 @@ import ujson as json
 from typing import Dict, Any
 
 class AppClient:
-    def __init__(self, log_system, bot):
+    def __init__(self, log_system, bot, notification = 'normal'):
         self.bot = bot
         self.logs = log_system
         self.app = Quart(__name__)
@@ -72,7 +72,7 @@ class AppClient:
 
         self.nicknames = ["operator", "group_id", "target"]
         self.base_path = os.path.join(os.getcwd(), "static")
-        with open('static/config/normal.yml', 'r', encoding='utf-8') as f:
+        with open(os.path.join(self.bot.config.get("notifications"), f"{notification}.yml"), 'r', encoding='utf-8') as f:
             self.yaml_config = yaml.safe_load(f)
         self.init_config()
 
