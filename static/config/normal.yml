@@ -1,0 +1,39 @@
+id_disabled: "自动填写最新编号"
+mode_error: "点击箭头查看可选模式"
+time_error: "时间不能晚于"
+time_error2: "时间不能早于"
+reason_error: "原因不能为空或纯数字"
+
+image_error: "至少上传一张图片"
+image_error2: "不是受支持的图片格式："
+image_error3: "无效的文件类型:"
+
+qq_error: "点击箭头查看可选QQ"
+qq_len_error: "QQ号不能低于5位或超过11位"
+
+duration_error: "禁言模式时长不能为空"
+duration_error1: "禁言时长格式错误，例：20s、3m、5h、2d、1M"
+duration_disabled: "仅禁言模式可填写"
+
+response_error: "解析响应失败："
+response_error2: "等待10秒钟没有响应，请联系tch"
+response_error3: "前端逻辑错误，请联系tch，该参数不该为空："
+
+download_image_error: "图片Data URL格式不正确，请联系tch"
+download_image_error2: "图片Base64解码失败："
+download_image_error3: "图片写入失败："
+download_image_error4: "图片下载时出现未知错误："
+download_image_error5: "重命名图片时出错："
+
+edit_error: "管理 {operator} 在5分钟内修改过ID为{id}的log"
+edit_error2: "请等待10秒或自行刷新页面"
+edit_error3: "❌ 更新ID为{id}的log失败: {e}"
+edit_success: "✅ 成功更新ID为{id}的log"
+
+delete_confirm: "确定删除此log吗？"
+delete_confirm2: "删除后将无法恢复！"
+delete_success: "删除成功！"
+delete_error: "删除失败！"
+delete_error2: "网络错误："
+
+add_success: "✅ 成功添加ID为{id}的log"

@@ -1,0 +1,874 @@
+# 风格文件修改指南：
+# 1、请用电脑的vscode进行修改，格式非常重要！
+# 2、不要删除或修改引号内的{变量}，可以在引号内随意移动位置。
+# 3、格式一般是“key: "value"”，比如delete_log_error: "删除log失败，详情查看后台"，delete_log_error是key，删除log失败，详情查看后台 是value。
+
+
+
+
+# 粉丝服入群申请相关：
+# 结尾是response的是拒绝申请的QQ回复，最多32个字符
+
+# 申请编号不存在
+flag_not_found: "flag不存在：{data}"
+
+# 申请者不在群内
+not_in_group: "粉丝服申请入群者 {qq} 不在大群内！"
+not_in_group_response: "你不在大群内！先从审核频道申请加入大群！"
+
+# mc_id不合法
+mc_id_error: "粉丝服申请入群者 {qq} 的MC ID不合法：{id}"
+mc_id_error_response: "MC ID只能由数字、字母、下划线组成，且长度为3到16字符"
+
+# 入群成功
+join_group_success: "已通过 {qq} 的入群申请，MC ID：{id}"
+
+# 同意或拒绝申请失败
+handle_group_request_error: "同意或拒绝 {qq} 的申请失败：{e}"
+
+# 大群列表：
+allowed_group_list:
+   - 833970143
+   - 702683488
+
+
+
+
+# log系统：
+
+# 帮助信息：
+help: |
+  📝 日志系统使用帮助:
+  ------------------
+  1. 添加日志:
+     /log 撤回 <QQ号> <原因> <QQ群> [图片]
+     /log 记过 <QQ号> <原因> <QQ群> [图片]
+     /log 禁言 <QQ号> <原因> <QQ群> <时长> [图片]
+     /log 踢出 <QQ号> <原因> <QQ群> [图片]
+     /log 警告 <QQ号> <原因> <QQ群> [图片]
+     /log 拉黑 <QQ号> <原因> <QQ群> [图片]
+     /log 记录 <QQ号> <原因> <QQ群> [图片]
+  ------------------
+  2. 查询日志:
+     /log <QQ号> （<数量上限>）
+  ------------------
+  3. 查看详细记录:
+     /log 详细 <记录ID>
+     /log 查找 <参数> <内容> <数量上限>
+  ------------------
+  4. 修改记录:
+     /log 编辑 <记录ID> <参数> <新内容>
+     /log 编辑 <记录ID> mode 禁言 <时长>
+     /log 编辑 <记录ID> image [图片]
+  ------------------
+  5. 删除日志:
+     /log 删除 <记录ID>
+  ------------------
+  7. 帮助信息:
+     /log 帮助 <关键词>
+  ------------------
+  8. 自动备份：
+     /log 备份 备份 <文件名>
+     /log 备份 自动备份 开/关
+  ------------------
+  9. 执行日志：
+  /log 执行 <记录ID>
+                                    tch复刻版
+
+# 帮助信息列表，key是昵称，value是正式名称。代码会检查输入的参数是否 完全匹配 key，匹配就返回value。
+# 只能修改value，不能添加或删除
+help_list:
+   "help_list": "输入/log help <list> <keyword> 查看具体帮助，帮助信息列表："
+   "mode": 
+      "mode": "输入/log help mode <mode> 查看具体模式帮助，模式昵称列表："
+      "禁言": "/log 禁言 <QQ号> <原因> <QQ群> <时长> [图片]"
+      "踢出": |
+         风险值即将为3时，可将模式改为踢出
+         /log 踢出 <QQ号> <原因> <QQ群> [图片]
+         例：/log 踢出 604456489（yezi） 粉丝服开荒时期偷龙蛋 1048699506（匿名粉丝服） [图片]
+      "撤回": "/log 撤回 <QQ号> <原因> <QQ群> [图片]"
+      "警告": "/log 警告 <QQ号> <原因> <QQ群> [图片]"
+      "拉黑": |
+         风险值即将为4时，可将模式改为拉黑
+         /log 拉黑 <QQ号> <原因> <QQ群> [图片]
+      "记录": |
+         记录只作为参考，不被计入违规数量
+         /log 记录 <QQ号> <原因> <QQ群> [图片]
+      "记过": |
+         记过不需要提醒对方，算作0.5次违规
+         /log 记过 <QQ号> <原因> <QQ群> [图片]
+   "action":
+      "action": "输入/log help action <action> 查看具体行为帮助，行为昵称列表："
+      "style": |
+         当前风格：/log style
+         风格列表：/log style list
+         切换风格：/log style load <文件名>/<编号>
+         删除风格：/log style delete <文件名>/<编号>
+         重载风格：/log style reload
+      "delete": "格式：/log delete <log_id1> <log_id2> ..."
+      "detail": "只支持查看一个：/log detail <log_id>"
+      "edit": |
+         可选参数：id、mode、target、reason、group_id、duration、operator、time、image
+         查看参数昵称：/log help field
+         正常格式：/log edit <记录ID> <参数> <新内容>
+         模式改为禁言：/log edit <记录ID> mode 禁言 <时长>
+         更改图片：/log edit <记录ID> image [图片]
+      "help": |
+         /log help <list> <keyword>
+         例：/log help mode help
+         输入/log help help 获取<list>昵称列表
+      "search":  |
+         可选参数：id、mode、target、reason、group_id、duration、operator、time
+         查看参数昵称：/log help field
+         正常格式：/log search <参数> <内容> <数量上限>
+         简略模式：/log <QQ号> （<数量上限>）
+         数量上限不填默认是10
+      "backup": |
+         备份信息：/log 备份
+         创建备份：/log 备份 备份 <文件名>
+         自动备份：/log 备份 自动备份 开/关
+         回档备份：/log 备份 回档 <编号>
+      "execute": |   # 所有群是指qq_groups中的所有群
+         /log 执行 <记录ID>
+         支持的模式：禁言、踢出、拉黑
+         禁言只在单个群执行，踢出和拉黑在风格文件列出的所有群执行
+         拉黑是踢出+不再受到入群申请，该玩家必须在群内
+      "get": |
+         /log 获取 <数字>
+         获取ID为序号的第几个log
+         例子：/log 获取 -1
+   "field":
+      "field":  "输入/log help field <field> 查看具体参数帮助，参数昵称列表："
+      "operator": "操作者必须在管理群内，或者昵称写进了风格文件"
+      "target": "目标QQ必须在指定群内，或者添加了备注，例：例：1454162804（无限）、604456489"
+      "time": "时间必须符合格式，合法，且不是未来时间：YYYY-MM-DD,HH:MM:SS"
+      "duration": "禁言时长必须符合格式，合法，且小数点不超过2位：数字+smhdMy"
+      "id": "老记录ID存在且新ID不存在"
+      "group_id": "QQ群、昵称、官方名称必须在风格列表内"
+      "reason": "原因不能是纯数字（如果你问为什么，因为其他都有限制条件就这个没有会逼死强迫症）"
+      "image": "图片格式必须能被QQ识别为image消息，至少输入1张图片"
+   "backup":
+      "backup": "输入/log help backup <backup> 查看具体备份帮助，备份昵称列表："
+      "make": "/log 备份 备份 （<文件名>） ，不填文件名默认为时间"
+      "back": |
+         /log 备份 回档 <编号>
+         输入/log 备份 查看编号
+         编号会在备份或删除备份后更新
+      "delete": |
+         /log 备份 删除 <编号>
+         输入/log 备份 查看编号
+         编号会在备份或删除备份后更新
+      "auto": "/log 备份 自动备份 开/关"
+      "list": "显示备份列表：/log 备份 列表"
+   "style":
+      "style": "输入/log help style <style> 查看具体风格帮助，风格昵称列表："
+      "list": "/log 风格 列表"
+      "reload": "/log 风格 重载"
+      "load": "/log 风格 加载 <文件名>/<编号>"
+      "delete": "/log 风格 删除 <文件名>/<编号>"
+   "operator_nicknames": "管理员昵称列表："
+   "qq_groups_nicknames": "QQ群昵称列表："
+   "risk_value": "风险值列表，normal是默认加权值，key是第n次违规，value是该次违规对应的风险值："
+
+# 帮助信息列表的列表，key是昵称，value是正式名称。代码会检查输入的参数是否 完全匹配 key，匹配就返回value。
+# value只能填：mode、field、action、qq_groups_nicknames、operator_nicknames、help_list
+help_list_list:
+   "mode": "mode"
+   "模式": "mode"
+   "类型": "mode"
+   "惩罚": "mode"
+   "措施": "mode"
+   "field": "field"
+   "参数": "field"
+   "字段": "field"
+   "行为": "action"
+   "行为昵称": "action"
+   "action": "action"
+   "操作": "action"
+   "操作昵称": "action"
+   "qq_groups_nicknames": "qq_groups_nicknames"
+   "groups": "qq_groups_nicknames"
+   "群": "qq_groups_nicknames"
+   "群昵称": "qq_groups_nicknames"
+   "operator_nicknames": "operator_nicknames"
+   "管理们": "operator_nicknames"
+   "管理昵称": "operator_nicknames"
+   "help": "help_list"
+   "帮助": "help_list"
+   "救命": "help_list"
+   "备份": "backup"
+   "backup": "backup"
+   "打包": "backup"
+   "style": "style"
+   "风格": "style"
+   "风险": "risk_value"
+   "风险值": "risk_value"
+   "risk_value": "risk_value"
+   "risk": "risk_value"
+   "权重": "risk_value"
+
+# /log help <参数> <参数>，输入的第一个参数不在mode_list或action_list或field_list或backup_list或style_list或help_list中
+help_error: "第二个参数输入错误，或昵称没有写进风格文件：{action}"
+
+# /log help <参数> <参数>，存在第二个参数，但第一个参数的value不在help_list的表层
+help_error2: "第二个参数不是字典名：“{action}”，输入/log help help 查看可选列表"
+
+# /log help <参数> <参数>，存在第二个参数，第一个参数的value在help_list的表层，但是没有这个字典
+help_error3: "第二个参数是字典名，但字典不在风格文件中：“{action}”，请联系tch修改风格文件"
+
+# /log help <参数> <参数>，存在第二个参数，第二个参数不在第一个参数代表的昵称字典内
+help_error4: "第三个参数不在第二个参数代表的昵称字典内，输入/log help {action} 查看可选昵称"
+
+# /log help <参数> <参数>，第二个参数对应的正式参数名不在第一个参数对应的help_list的字典中
+help_error5: "第三个参数正式名不在第二个参数对应的帮助信息字典内：“{action}”，请联系tch修改风格文件"
+
+
+
+
+# /log 类型 添加日志相关：
+
+# 添加日志成功的回复
+add_log_success: |
+  ✅ 日志记录已成功添加 (ID: {id})
+  该QQ已有 {l} 条违规记录，风险值为 {risk} 分
+  ⚠️ 已保存 {c} 张违规图片证据
+
+# action不在mode_list或action_list中
+action_error: |
+   行为输入错误，或昵称没有写进风格文件：“{action}”
+   输入/log help action 查看帮助
+
+# action在action_list的key但是value错误
+action_error2: "行为昵称匹配的value错误：“{action}”，请联系tch修改风格文件"
+
+# duration参数不合法
+duration_error1: "禁言时长格式错误：“{duration}”，例：20s、3m、5h、2d、4w、1M"
+duration_error2: "秒、分钟不能大于60或小于1"
+duration_error3: "小时不能大于720或小于1"
+duration_error4: "天不能大于30或小于1"
+duration_error5: "月只能为1"
+duration_error6: "周不能大于4.28或小于1"
+
+# reason是纯数字
+reason_error: "原因不能是纯数字：“{reason}”"
+
+# 没有输入图片
+no_image: "至少输入一张图片"
+
+# 图片下载出错
+download_image_response_status_code: "下载图片失败，状态码: {response}"
+download_image_error: "下载图片出错: {e}"
+
+# qq号格式错误
+qq_len_error: "QQ号不能低于5位或超过11位：{qq}"
+qq_name_error: "QQ（名字）格式错误：“{qq}”，例：1454162804（无限）、604456489"
+
+# 输入的group_id只有一个字符
+qq_group_one_character: "至少输入两个字符：“{group}”"
+
+# 群在qq_groups_nicknames中但是value不在qq_groups中，或管理员在operator_nicknames中但是value不在operator_list中
+nickname_not_found: "昵称在风格列表中但官方名称不存在：“{nickname}”，请联系tch修改风格文件"
+
+# 群不是昵称且名字不匹配
+qq_group_error: "QQ（名字）格式错误，或昵称没有写进风格文件，输入/log help groups 查看群昵称列表"
+
+# 群不在qq_groups中
+qq_group_not_found: "群 {group} 不在QQ群列表中，或昵称没有写进风格文件"
+
+# 群里找不到目标QQ
+target_not_found: "群 {group} 中找不到目标QQ {qq} ！请添加昵称，例：1454162804（无限）"
+
+# 检查目标是否在群内时出错
+get_nickname_error: "获取群成员昵称时出错: {e}"
+get_nickname_error2: "网络请求异常: {e}"
+get_nickname_error3: "目标QQ {user_id} 不在群 {group_id} 中！"
+
+# 非禁言模式参数不为3个
+log_command_len_error1: "输入的参数应为4个，例：“/log 警告 123456 灌水 1048699506（匿名粉丝服）”"
+
+# 禁言模式参数不为4个
+log_command_len_error2: "禁言模式输入的参数应为5个，例：“/log 禁言 123456 刷屏 1048699506（匿名粉丝服） 1h”"
+
+
+
+
+# /log 详细 id 查询log_id详细相关：
+
+# 查询成功的回复
+log_details: |
+   📋 记录ID: {id}
+   🎯 目标QQ: {target}
+   🏷️ 操作类型: {mode}
+   📝 原因: {reason}
+   👥 QQ群: {group_id}
+   ⏳ 时长: {duration}
+   👮 操作者: {operator}
+   🕒 时间: {time}
+   🖼️ 违规内容: {c}张图片证据
+
+# log查询上限，会自动替换上方的{log_search_limit}
+log_search_limit: 10
+
+# 如果模式不是禁言，duration参数填什么，会自动替换相关的{duration}
+no_duration: "不适用"
+
+# log_id不存在
+details_none: "ID {id} 不存在"
+
+# id不是整数
+log_id_error: "ID输入错误，请输入正整数：{id}"
+
+
+
+
+# /log search 相关：
+
+# 没找到该字段的log
+value_not_found1: "没找到 {field} 开头为 {value} 的log"
+value_not_found2: "没找到 {field} 包含 {value} 的log"
+value_not_found3: "没找到 {field} 为 {value} 的log"
+
+# 搜索不支持的字段
+field_not_support: "不支持搜索该参数：{field}"
+
+# 数量上限不是整数
+limit_error: "数量上限应为整数：{limit}"
+
+# 回复的开头
+log_search_qq: "，风险值为{risk}分"
+log_search1: "{field} 开头为 {value} 的记录(最多{log_search_limit}条，总共{l}条{ifqq}):"
+log_search2: "{field} 包含 {value} 的记录(最多{log_search_limit}条，总共{l}条{ifqq}):"
+log_search3: "{field} 为 {value} 的记录(最多{log_search_limit}条，总共{l}条{ifqq}):"
+
+# 回复的内容
+log_search_value: |
+   记录ID: {id}
+   操作类型: {mode}
+   原因: {reason}
+   目标QQ: {target}
+   QQ群: {group_id}
+   时长: {duration}
+   操作者: {operator}
+   时间: {time}
+   违规内容: {c}张图片
+   ------------------
+
+# /log <整数> <数量上限>的时候参数超过了2个
+log_search_error: "查询QQ时输入的参数应为一到两个，例：“/log 123456 10”"
+
+
+
+
+# /log 编辑 相关：
+modify_success: "ID {id} 的 {field} 修改成功：{old} → {new}"
+modify_error: "ID {id} 的 {field} 本来就是 {old}"
+
+# 参数少于3个
+edit_command_len_error: "输入的参数应为3或5个，例：“/log 编辑 1 mode 警告”"
+
+# 类型为mode且新值为禁言，但没有duration参数
+edit_command_len_error2: "禁言模式输入的参数应为5个，例：“/log 编辑 1 mode 禁言 1h”"
+
+# 新值不为禁言，但有第四个参数
+edit_command_len_error3: "输入的参数应为4个，例：“/log 编辑 1 mode 警告”"
+
+# 类型不为image但是参数只有3个
+edit_command_len_error4: "非图片模式输入的参数至少为4个"
+
+# 第二个参数是mode，但是第三个参数不在mode_list
+edit_mode_error: |
+   模式输入错误，或昵称没有写进风格文件：“{mode}”
+   输入/log help mode 查看帮助
+
+# 要修改的字段昵称不在field_list
+field_error: "没有在风格文件中定义的未知参数昵称：“{field}”，输入/log help field 查看帮助"
+
+# 要修改的字段昵称在field_list中但value错误
+field_error2: "参数昵称匹配的value错误：“{field}”，请联系tch修改风格文件"
+
+# 修改操作者但对方不在管理群
+edit_operator_error: "操作者 {operator} 不在 {group} 中，或昵称没有写进风格文件，输入/log help operators 查看群昵称列表"
+
+# time相关：
+time_error: "时间格式错误: {e}"
+time_error1: "时间字符串过长"
+time_error2: "格式不匹配，应为 YYYY-MM-DD,HH:MM:SS"
+time_error3: "日期超出范围（如2月30日）"
+time_error4: "月份必须是1-12"
+time_error5: "小时必须是0-23"
+time_error6: "分钟必须是0-59"
+time_error7: "秒必须是0-59"
+time_error8: "微秒超出范围"
+time_error9: "输入了未来时间"
+
+# /log 编辑 log_id mode 禁言 的时候，如果没有输入duration参数
+duration_not_found: "改为禁言模式输入的参数应为5个，例：“/log 编辑 1 mode 禁言 10m”"
+
+# 非禁言模式修改duration字段
+modify_duration_error: "ID {id} 的模式是{mode}，没有duration！"
+
+# /log 编辑 <id> 相关：
+modify_id_not_found: "原ID {id} 不存在"
+modify_id_present: "新ID {id} 已存在"
+modify_id_success: "ID修改成功：{old_id} → {new_id}"
+modify_id_error: "ID修改失败: {e}"
+
+# 修改id时重命名图片出错
+rename_image_error: "重命名图片{filename}失败：{e}"
+
+# 图片替换成功
+replace_image_success: "ID {id} 的图片替换成功"
+
+
+
+
+
+# /log 删除 相关：
+
+# 删除log时候出错
+delete_image_error: "图片删除失败：{e}"
+delete_log_error: "删除log失败，详情查看后台"
+
+# 删除log成功
+delete_log_success: "删除ID {id} 成功"
+
+
+
+
+# /log 风格 相关：
+style_now: "当前风格为 {style}"
+style_details: "风格列表："
+
+# action在style_list的key但是value错误
+style_error: "风格昵称匹配的value错误：“{action}”，请联系tch修改风格文件"
+
+# /log 风格 加载 <name> 相关：
+style_not_found: "找不到风格文件：{name}.yml"
+style_load_error: "解析风格文件出错：{e}"
+style_success: "风格 {name} 加载成功"
+
+# /log 风格 <field> 第一个参数没写到昵称列表
+style_field_error: "没有在风格文件中定义的未知参数昵称：“{field}”，输入/log help style 查看帮助"
+
+
+
+
+# /log 备份 相关：
+backup_running: "正在进行自动备份，请稍后再试"
+backup_details: |
+   自动备份：{auto}
+   备份周期：{delay}
+   上次备份：{last}
+   备份上限：{limit}
+backup_details2: "备份列表：{list}"
+
+# action在backup_list的key但是value错误
+backup_error: "备份昵称匹配的value错误：“{action}”，请联系tch修改风格文件"
+
+# /log 备份 备份 相关：
+backup_make_error: "备份失败：{e}"
+backup_verify_error: "备份验证失败：{e}"
+backup_make_success: "备份成功：{name}"
+backup_zip_error: "创建压缩包失败：{e}"
+
+# /log 备份 <field> <value> 第一个参数没写到昵称列表
+backup_field_error: "没有在风格文件中定义的未知参数昵称：“{field}”，输入/log help backup 查看帮助"
+
+# /log 备份 删除 <id> 相关：
+backup_id_not_found: "删除备份输入的参数应为3个，例：/log backup delete 1"
+backup_id_error: "编号非整数或超出范围：{id}"
+backup_file_not_found: "文件不存在：{path}"
+backup_delete_success: "文件已删除：{path}"
+backup_delete_error: "文件删除出错：{e}"
+
+# /log 备份 备份 <name> 相关：
+backup_name_error: "文件名包含非法字符: <>:\"/\\|?* 或控制字符：{name}"
+backup_name_error2: "文件名不能是Windows系统保留名称：{name}"
+backup_name_error3: "Windows文件名不能以空格或点结尾：{name}"
+backup_name_error4: "文件名不能是目录引用符：{name}"
+backup_name_error5: "文件名不能包含路径分隔符 (/, \\)：{name}"
+backup_name_error6: "文件名过长 (最大255字符，输入了{l}个字符"
+
+# 网页群聊头像下载
+download_groups_image_succeess: "成功下载群 {group_id} 的头像"
+
+# xlsx表格导出
+export_excel_success: "xlsx表格导出成功！"
+export_excel_error: "xlsx表格导出失败，请查看后台！"
+
+# /log 备份 回档 <id> 相关：
+backup_back_error: "回档备份出错：{e}"
+backup_back_success: "回档备份成功：{path}"
+
+# /log 备份 自动备份 相关：
+backup_auto_open: "自动备份已开启"
+backup_auto_close: "自动备份已关闭"
+backup_auto: "自动备份状态：{auto}"
+
+# 开关列表，key是昵称，value是正式名称。代码会检查输入的参数是否 完全匹配 key，匹配就返回value。这个列表没有登记到help_list和help_list_list。
+# value只能填：开、关
+backup_auto_list:
+   "开": "开"
+   "open": "开"
+   "close": "关"
+   "关": "关"
+
+# 参数不在backup_auto_list中
+backup_auto_error: "参数输入错误，昵称没有写进风格文件：{auto}"
+
+
+
+
+# /log 执行 相关：
+execute_error: "执行 {mode} 出错：{e}"
+execute_error2: "你不能{mode}一位管理！"
+execute_success: "成功将{target}在{group}中{mode}"
+execute_field_error: "该模式无法执行：“{mode}”，输入/log help execute 查看帮助"
+
+
+
+
+# /log 获取 相关：
+get_id_not_found: "找不到{order}第{n}个log"
+get_error: "序号输入错误，请输入整数：{n}"
+order_forward: "正序"
+order_reverse: "倒序"
+
+
+
+
+# 关键词列表，value是关键词。代码会检查输入的参数是否 完全匹配 value。
+log_list:
+   - "log"
+   - "老哥"
+   - "原木"
+   - "你好"
+
+
+
+
+# 模式列表，key是昵称，value是正式名称。代码会检查输入的参数是否 完全匹配 key，匹配就返回value。
+# value只能填：拉黑、踢出、禁言、警告、撤回、记过、记录
+mode_list:
+   "禁言": "禁言"
+   "mute": "禁言"
+   "撤回": "撤回"
+   "unsend": "撤回"
+   "recall": "撤回"
+   "踢出": "踢出"
+   "踢除": "踢出"
+   "kick": "踢出"
+   "remove": "踢出"
+   "记录": "记录"
+   "log": "记录"
+   "note": "记录"
+   "record": "记录"
+   "警告": "警告"
+   "warn": "警告"
+   "拉黑": "拉黑"
+   "block": "拉黑"
+   "blacklist": "拉黑"
+   "black": "拉黑"
+   "记过": "记过"
+   "提醒": "记过"
+   "不合适": "记过"
+   "demerit": "记过"
+   "下不为例": "记过"
+
+
+
+
+# 风险值加权数列表，用于查询某个目标QQ的风险值。每个模式列表的key中，normal的value是默认加权值，key是第n次违规。代码会按时间从早到晚的顺序遍历目标QQ违规记录的模式，查找有没有设定第n次违规的加权值。
+# 只能修改value，不能添加或删除
+risk_value_list:
+   "禁言": 
+      "normal": 1.0
+      1: 2.0
+   "撤回":
+      "normal": 1.0
+   "踢出":
+      "normal": 1.0
+      1: 3.0
+      2: 2.0
+   "记录":
+      "normal": 0.0
+   "警告":
+      "normal": 1.0
+   "拉黑":
+      "normal": 1.0
+      1: 4.0
+      2: 3.0
+      3: 2.0
+   "记过":
+      "normal": 0.5
+
+
+
+
+# 行为列表，key是昵称，value是正式名称。代码会检查输入的参数是否 完全匹配 key，匹配就返回value。
+# value只能填：delete、edit、style、detail、help、search、backup、execute、get
+action_list:
+   "删除": "delete"
+   "delete": "delete"
+   "删": "delete"
+   "编辑": "edit"
+   "edit": "edit"
+   "modify": "edit"
+   "修改": "edit"
+   "风格": "style"
+   "style": "style"
+   "详细": "detail"
+   "detail": "detail"
+   "详情": "detail"
+   "查询": "detail"
+   "help": "help"
+   "帮助": "help"
+   "救命": "help"
+   "search": "search"
+   "搜索": "search"
+   "查找": "search"
+   "寻找": "search"
+   "备份": "backup"
+   "backup": "backup"
+   "打包": "backup"
+   "execute": "execute"
+   "执行": "execute"
+   "干掉": "execute"
+   "做": "execute"
+   "do": "execute"
+   "干": "execute"
+   "处刑": "execute"
+   "new": "get"
+   "最新": "get"
+   "获取": "get"
+   "整个": "get"
+   "获得": "get"
+   "get": "get"
+
+
+
+
+# 修改字段昵称列表，key是昵称，value是正式名称。代码会检查输入的参数是否 完全匹配 key，匹配就返回value。
+# value只能填：id、mode、target、reason、group_id、duration、operator、time、image
+field_list:
+   "mode": "mode"
+   "模式": "mode"
+   "类型": "mode"
+   "惩罚": "mode"
+   "措施": "mode"
+   "id": "id"
+   "编号": "id"
+   "log_id": "id"
+   "logid": "id"
+   "ID": "id"
+   "target": "target"
+   "目标": "target"
+   "qq": "target"
+   "QQ": "target"
+   "目标QQ": "target"
+   "目标qq": "target"
+   "qq_number": "target"
+   "qqnumber": "target"
+   "qq号": "target"
+   "QQ号": "target"
+   "违规人": "target"
+   "人": "target"
+   "Q": "target"
+   "Q号": "target"
+   "reason": "reason"
+   "原因": "reason"
+   "理由": "reason"
+   "违规内容": "reason"
+   "group_id": "group_id"
+   "群聊": "group_id"
+   "群号": "group_id"
+   "group": "group_id"
+   "群聊": "group_id"
+   "群": "group_id"
+   "duration": "duration"
+   "时长": "duration"
+   "禁言时长": "duration"
+   "operator": "operator"
+   "操作者": "operator"
+   "管理员": "operator"
+   "管理": "operator"
+   "执行者": "operator"
+   "处刑人": "operator"
+   "处理人": "operator"
+   "time": "time"
+   "时间": "time"
+   "image": "image"
+   "图片": "image"
+   "picture": "image"
+   "证据": "image"
+   "图片证据": "image"
+
+
+
+
+# 备份字段昵称列表，key是昵称，value是正式名称。代码会检查输入的参数是否 完全匹配 key，匹配就返回value。
+# value只能填：make、delete、back、auto
+backup_list:
+   "make": "make"
+   "备份": "make"
+   "backup": "make"
+   "开始": "make"
+   "删除": "delete"
+   "delete": "delete"
+   "删": "delete"
+   "delete": "delete"
+   "back": "back"
+   "回档": "back"
+   "回溯": "back"
+   "应用": "back"
+   "加载": "back"
+   "自动备份": "auto"
+   "auto": "auto"
+   "自动": "auto"
+   "日常": "auto"
+   "list": "list"
+   "列表": "list"
+
+
+
+
+# 风格字段昵称列表，key是昵称，value是正式名称。代码会检查输入的参数是否 完全匹配 key，匹配就返回value。
+# value只能填：make、delete、back、auto
+style_list:
+   "list": "list"
+   "列表": "list"
+   "reload": "reload"
+   "重载": "reload"
+   "load": "load"
+   "加载": "load"
+   "删除": "delete"
+   "delete": "delete"
+   "删": "delete"
+   "delete": "delete"
+
+
+
+
+# 卸任管理员名单，用于处理网页装饰
+former_operator_list:
+   - 862304932   # xt
+   - 2750934490  # ghost
+   - 2500586413  # tnt
+   - 2171999613 # 大眼
+
+
+
+
+# 管理员官方昵称名单，会自动将输入的昵称替换成官方昵称，如果下表没有会读取管理员群的群昵称
+operator_list:
+   3875039665: "匿名兲"
+   2171999613: "大眼"
+   592113966: "合法子"
+   2183265126: "狗老大石炭"
+   1401527330: "百奇"
+   1061950265: "i兲"
+   2042037924: "TwillightCat"
+   1454162804: "无限"
+   3572896993: "61"
+   3751153548: "tch"
+   862304932: "xt"
+   2750934490: "ghost"
+   2500586413: "tnt"
+   1758822794: "百奇小号"
+   3907989780: "匿名酱"
+   3911087960: "亚玻伦"
+   3869834206: "虫我子"
+   3911087960: "亚玻伦"
+
+
+
+
+# 管理员昵称名单，key是昵称，value是正式名称。代码会检查输入的参数是否 完全匹配 key，匹配就返回value。然后找到上方列表对应的官方名
+# value只能填上方列表的key。
+operator_nicknames_list:
+   "匿名兲": 3875039665
+   "匿名": 3875039665
+   "王八": 3875039665
+   "龟龟": 3875039665
+   "nmt": 3875039665
+   "大眼": 2171999613
+   "eye": 2171999613
+   "大眼睛": 2171999613
+   "合法子": 592113966
+   "hfz": 592113966
+   "石炭狗老大": 2183265126
+   "狗老大石炭": 2183265126
+   "石炭": 2183265126
+   "炭狗": 2183265126
+   "百奇": 1401527330
+   "PockyWolf": 1401527330
+   "i兲": 1061950265
+   "TwillightCat": 2042037924
+   "tw": 2042037924
+   "猫鱼": 2042037924
+   "无限": 1454162804
+   "wuxian": 1454162804
+   "wuxlan": 1454162804
+   "61": 3572896993
+   "six1": 3572896993
+   "sin1": 3572896993
+   "tch": 3751153548
+   "天哪桑": 3751153548
+   "天哪": 3751153548
+   "xt": 862304932
+   "ghost": 2750934490
+   "Ghost": 2750934490
+   "鬼": 2750934490
+   "👻": 2750934490
+   "tnt": 2500586413
+   "TNT": 2500586413
+   "虫我": 3869834206
+   "虫我子": 3869834206
+   "百奇小号": 1758822794
+   "匿名酱": 3907989780
+   "亚玻伦": 3911087960
+
+
+
+
+
+# QQ群官方昵称名单，会自动将输入的昵称替换成官方昵称
+# 只能修改value，不能添加或删除
+qq_groups:
+   833970143: "1k人吹水群"
+   1048699506: "粉丝服群"
+   1057699431: "核心群"
+   1058185958: "房管群"
+   702683488: "通知群"
+   963462616: "管理群"
+   607933097: "同人群"
+
+
+
+
+# QQ群昵称名单，key是昵称，value是正式名称。代码会检查输入的参数是否 包含在 key，匹配就返回value。然后找到上方列表对应的官方名
+# value只能填上方列表的key
+qq_groups_nicknames_list:
+   "匿名粉丝服群": 1048699506
+   "粉丝服群": 1048699506
+   "匿名粉丝服": 1048699506
+   "大群": 833970143
+   "1k人吹水群": 833970143
+   "千人群": 833970143
+   "吹水群": 833970143
+   "主群": 833970143
+   "通知群": 702683488
+   "负一群": 702683488
+   "同人群": 607933097
+   "二创群": 607933097
+   "核心群": 1057699431
+   "黑群": 1057699431
+   "龙蛋之谜": 1057699431
+   "黑裙": 1057699431
+   "龙蛋群": 1057699431
+   "管理群": 963462616
+   "高层群": 963462616
+   "高人群": 963462616
+   "神人群": 963462616
+   "房管群": 1058185958
+   "东厂": 1058185958
