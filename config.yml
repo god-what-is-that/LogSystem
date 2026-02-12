@@ -25,7 +25,7 @@ backup_limit: 10
 
 # 当前风格文件名
 style: normal
-notifications: normal
+notification: normal
 
 # qq重连周期
 reconnect_delay: 30
